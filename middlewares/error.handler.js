@@ -1,4 +1,6 @@
-function logErrors (err, req, res, next) {
+const { restart } = require('nodemon');
+
+function logErrors(err, req, res, next) {
   console.log('logErrors');
   console.error(err);
   next(err);
@@ -12,5 +14,12 @@ function errorHandler(err, req, res, next) {
   });
 }
 
+function boomErrorHandler(err, req, res, next) {
+  if (err.isBoom) {
+    const { output } = err;
+    res.status(output.statusCode).json(output.payload);
+  }
+  next(err);
+}
 
-module.exports = { logErrors, errorHandler }
+module.exports = { logErrors, errorHandler, boomErrorHandler };
