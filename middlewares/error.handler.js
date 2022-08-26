@@ -1,4 +1,4 @@
-const { restart } = require('nodemon');
+//const { restart } = require('nodemon');
 
 function logErrors(err, req, res, next) {
   console.log('logErrors');
