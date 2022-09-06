@@ -1,6 +1,7 @@
 const {faker} = require('@faker-js/faker');
 //const {faker} = require('faker');
 const boom = require('@hapi/boom');
+const productModel = require('../models/product.model');
 
 class ProductsService {
 
@@ -31,12 +32,19 @@ class ProductsService {
     return newProduct;
   }
 
-  find() {
+  /*find() {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.products);
       }, 3000);
     })
+  }*/
+
+  find() {
+    //const arrayProducts = productModel.find();
+    //this.products=arrayProducts;
+    //return this.products;
+    return productModel.find();
   }
 
   async findOne(id) {
