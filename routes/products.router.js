@@ -13,7 +13,9 @@ const service = new ProductsService();
 
 router.get('/', async (req, res) => {
   const products = await service.find();
-  res.json(products);
+  //res.json(products);
+  res.header("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify(products));
 });
 
 router.get('/filter', (req, res) => {

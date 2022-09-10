@@ -48,7 +48,12 @@ class ProductsService {
   }
 
   async findOne(id) {
-    const product = this.products.find(item => item.id === id);
+    this.products = productModel.find();
+    //this.products=arrayProducts;
+    //console.log(this.products);
+    console.log('PASO POR AQUI');
+
+    const product = /*productModel.findOne({id: id});*/this.products.find(item => item.id === id);
     if (!product) {
       throw boom.notFound('product not found');
     }
