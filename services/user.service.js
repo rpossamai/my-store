@@ -1,7 +1,6 @@
 const boom = require('@hapi/boom');
 
-//const {models} = require('../libs/sequelize');
-const { models } = require('./../libs/sequelize');
+const {models} = require('../libs/sequelize');
 
 class UserService {
   constructor() {}
