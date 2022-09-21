@@ -8,7 +8,7 @@ const OrderSchema = {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER
   },
   customerId: {
     field: 'customer_id',
@@ -16,10 +16,10 @@ const OrderSchema = {
     type: DataTypes.INTEGER,
     references: {
       model: CUSTOMER_TABLE,
-      key: 'id',
+      key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL',
+    onDelete: 'SET NULL'
   },
   createdAt: {
     allowNull: false,
@@ -51,7 +51,7 @@ class Order extends Model {
       as: 'items',
       through: models.OrderProduct,
       foreignKey: 'orderId',
-      otherKey: 'productId',
+      otherKey: 'productId'
     });
   }
 
@@ -60,8 +60,8 @@ class Order extends Model {
       sequelize,
       tableName: ORDER_TABLE,
       modelName: 'Order',
-      timestamps: false,
-    };
+      timestamps: false
+    }
   }
 }
 
