@@ -33,7 +33,7 @@ const OrderSchema = {
       if (this.items != null) {
         if (this.items.length > 0) {
           return this.items.reduce((total, item) => {
-            return total + item.price * item.OrderProduct.amount;
+            return total + (item.price * item.OrderProduct.amount);
           }, 0);
         }
       }
@@ -42,7 +42,9 @@ const OrderSchema = {
   },
 };
 
+
 class Order extends Model {
+
   static associate(models) {
     this.belongsTo(models.Customer, {
       as: 'customer',
