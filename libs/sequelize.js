@@ -20,6 +20,4 @@ const sequelize = new Sequelize(config.dbUrl, options);
 
 setupModels(sequelize);
 
-//sequelize.sync();
-
 module.exports = sequelize;
