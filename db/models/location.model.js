@@ -1,32 +1,28 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const USER_TABLE = 'users';
+const LOCATION_TABLE = 'locations';
 
-const UserSchema = {
+const LocationSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  email: {
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+  },  
+  description: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: true,
   },
-  password: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  recoveryToken: {
-    field: 'recovery_token',
-    allowNull: true,
-    type: DataTypes.STRING
-  },
-  role: {
+  coordinates: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'customer'
+    unique: true,
   },
   createdAt: {
     allowNull: false,
@@ -36,23 +32,23 @@ const UserSchema = {
   }
 }
 
-class User extends Model {
+class Location extends Model {
   static associate(models) {
-    this.hasOne(models.Customer, {
+   /* this.hasOne(models.Customer, {
       as: 'customer',
       foreignKey: 'userId'
-    });
+    });*/
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: USER_TABLE,
-      modelName: 'User',
+      tableName:LOCATION_TABLE,
+      modelName: 'Location',
       timestamps: false
     }
   }
 }
 
 
-module.exports = { USER_TABLE, UserSchema, User }
+module.exports = { LOCATION_TABLE, LocationSchema, Location}
