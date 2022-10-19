@@ -11,10 +11,40 @@ class CategoryService {
     return newCategory;
   }
 
-  async find() {
-    const categories = await models.Category.findAll();
+  async find(query) {
+    const options = {
+      include: ['products'],
+      where: {}
+    }
+
+    const { ownerId } = query;
+    if (ownerId) {
+      options.where.ownerId = ownerId;
+    }
+
+   /* const { storeId } = query;
+    if (storeId) {
+      options.where.storeId = storeId;
+    }*/
+
+    const categories = await models.Category.findAll(options);
     return categories;
   }
+
+  /*async findByOwner(ownerId) {
+    const categories = await models.Category.findAll({
+      where: {
+        '$owner.id$': ownerId
+      },
+      include: [
+        {
+          association: 'owner',
+          include: ['user']
+        }
+      ]
+    });
+    return categories;
+  }*/
 
   async findOne(id) {
     const category = await models.Category.findByPk(id, {

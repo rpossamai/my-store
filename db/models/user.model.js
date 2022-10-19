@@ -42,6 +42,10 @@ class User extends Model {
       as: 'customer',
       foreignKey: 'userId'
     });
+    this.hasOne(models.Owner, {
+      as: 'owner',
+      foreignKey: 'ownerId'
+    });
   }
 
   static config(sequelize) {

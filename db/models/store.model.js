@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-//const { USER_TABLE } = require('./user.model')
+const { OWNER_TABLE } = require('./owner.model');
 
 const STORE_TABLE = 'stores';
 
@@ -29,29 +29,30 @@ const StoreSchema =  {
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
-  }/*,
-  userId: {
-    field: 'user_id',
+  },  
+  ownerId: {
+    field: 'owner_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-    unique: true,
     references: {
-      model: USER_TABLE,
+      model: OWNER_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
-  }*/
+  }
 }
 
 class Store extends Model {
 
   static associate(models) {
-    /*this.belongsTo(models.User, {as: 'user'});
-    this.hasMany(models.Order, {
-      as: 'orders',
-      foreignKey: 'storeId'
-    });*/
+    this.belongsTo(models.Owner, { as: 'owner' });
+    this.belongsToMany(models.Product, {
+      as: 'products',
+      through: models.StoreProduct,
+      foreignKey: 'storeId',
+      otherKey: 'productId'
+    });
   }
 
   static config(sequelize) {
