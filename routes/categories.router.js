@@ -22,8 +22,35 @@ router.get('/',
   }
 });
 
-/*router.get('/owner-categories',
+//Busca primero el user, el owner y luego filtra la categoria en el where
+router.get('/owner',
   //passport.authenticate('jwt', {session: false}),
+  //checkRoles('admin', 'seller', 'customer'),
+  validatorHandler(queryCategorySchema, 'query'),
+  async (req, res, next) => {
+  try {
+    const categories = await service.find(req.query);
+    res.json(categories);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/*router.get('/categories-owner',
+  passport.authenticate('jwt', {session: false}),
+  async (req, res, next) => {
+    try {
+      const user = req.owner;
+      const categories = await service.findByOwner(owner.sub);
+      res.json(categories);
+    } catch (error) {
+      next(error);
+    }
+  }
+);*/
+
+/*router.get('/categories-user',
+  passport.authenticate('jwt', {session: false}),
   async (req, res, next) => {
     try {
       const user = req.owner;
