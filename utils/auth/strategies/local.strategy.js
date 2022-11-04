@@ -4,8 +4,8 @@ const AuthService = require('./../../../services/auth.service');
 const service = new AuthService();
 
 const LocalStrategy = new Strategy({
-    usernameField: 'email',
-    passwordField: 'password'
+    usernameField: 'username',
+    passwordField: 'password',
   },
   async (email, password, done) => {
     try {

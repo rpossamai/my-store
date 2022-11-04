@@ -2,7 +2,9 @@ const express = require('express');
 
 const ProductsService = require('./../services/product.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { createProductSchema, updateProductSchema, getProductSchema, queryProductSchema } = require('./../schemas/product.schema');
+const { createProductSchema, updateProductSchema, 
+  getProductSchema, queryProductSchema, setEnableSchema
+ } = require('./../schemas/product.schema');
 
 const router = express.Router();
 const service = new ProductsService();
@@ -67,6 +69,21 @@ router.delete('/:id',
       const { id } = req.params;
       await service.delete(id);
       res.status(201).json({id});
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
+router.post(
+  '/enable',
+  validatorHandler(setEnableSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newItem = await service.setEnable(body);
+      res.status(201).json(newItem);
     } catch (error) {
       next(error);
     }

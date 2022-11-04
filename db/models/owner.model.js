@@ -44,6 +44,10 @@ class Owner extends Model {
       as: 'categories',
       foreignKey: 'ownerId'
     });
+    this.hasMany(models.CategoryExtra, {
+      as: 'categories_extra',
+      foreignKey: 'ownerId'
+    });
     this.hasMany(models.Store, {
       as: 'stores',
       foreignKey: 'ownerId'

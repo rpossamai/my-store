@@ -4,16 +4,29 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 const { config } = require('./../config/config');
+
 const UserService = require('./user.service');
 const service = new UserService();
 
+const CustomerService = require('./customers.service');
+const customerService = new CustomerService();
+
 class AuthService {
 
-  async getUser(email, password) {
-    const user = await service.findByEmail(email);
-    if (!user) {
-      throw boom.unauthorized();
+  async getUser(username, password) {
+    var user;
+
+    if(username.indexOf('@') === -1){
+      const customer = await customerService.findByPhone(username);
+      user = await service.findOne(customer.userId);
     }
+    else{
+      user = await service.findByEmail(username);
+      if (!user) {
+        throw boom.unauthorized();
+      }
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw boom.unauthorized();;

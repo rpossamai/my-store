@@ -21,6 +21,13 @@ class CustomerService {
     return user;
   }
 
+  async findByPhone(phone) {
+    const rta = await models.Customer.findOne({
+      where: { phone }
+    });
+    return rta;
+  }
+
   async create(data) {
     const hash = await bcrypt.hash(data.user.password, 10);
     const newData = {

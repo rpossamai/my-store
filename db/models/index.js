@@ -2,6 +2,11 @@ const { User, UserSchema } = require('./user.model');
 const { Customer, CustomerSchema } = require('./customer.model');
 const { Category, CategorySchema } = require('./category.model');
 const { Product, ProductSchema } = require('./product.model');
+const {
+  CategoryExtra,
+  CategoryExtraSchema,
+} = require('./category-extra.model');
+const { ProductExtra, ProductExtraSchema } = require('./product-extra.model');
 const { Order, OrderSchema } = require('./order.model');
 const { OrderProduct, OrderProductSchema } = require('./order-product.model');
 const { Owner, OwnerSchema } = require('./owner.model');
@@ -18,6 +23,8 @@ function setupModels(sequelize) {
   Customer.init(CustomerSchema, Customer.config(sequelize));
   Category.init(CategorySchema, Category.config(sequelize));
   Product.init(ProductSchema, Product.config(sequelize));
+  CategoryExtra.init(CategoryExtraSchema, CategoryExtra.config(sequelize));
+  ProductExtra.init(ProductExtraSchema, ProductExtra.config(sequelize));
   Order.init(OrderSchema, Order.config(sequelize));
   OrderProduct.init(OrderProductSchema, OrderProduct.config(sequelize));
   StoreProduct.init(StoreProductSchema, StoreProduct.config(sequelize));
@@ -29,10 +36,11 @@ function setupModels(sequelize) {
   Owner.associate(sequelize.models);
   Store.associate(sequelize.models);
   Customer.associate(sequelize.models);
+  CategoryExtra.associate(sequelize.models);
+  ProductExtra.associate(sequelize.models);
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
   Order.associate(sequelize.models);
-
 
   //Role.associate(sequelize.models);
   //Store.associate(sequelize.models);

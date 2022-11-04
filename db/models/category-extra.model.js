@@ -2,9 +2,9 @@ const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const { OWNER_TABLE } = require('./owner.model');
 
-const CATEGORY_TABLE = 'categories';
+const CATEGORY_EXTRA_TABLE = 'categories_extra';
 
-const CategorySchema = {
+const CategoryExtraSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -44,24 +44,24 @@ const CategorySchema = {
 }
 
 
-class Category extends Model {
+class CategoryExtra extends Model {
 
   static associate(models) {
     this.belongsTo(models.Owner, { as: 'owner' });
-    this.hasMany(models.Product, {
-      as: 'products',
-      foreignKey: 'categoryId'
+    this.hasMany(models.ProductExtra, {
+      as: 'products_extra',
+      foreignKey: 'categoryExtraId'
     });
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: CATEGORY_TABLE,
-      modelName: 'Category',
+      tableName: CATEGORY_EXTRA_TABLE,
+      modelName: 'CategoryExtra',
       timestamps: false
     }
   }
 }
 
-module.exports = { Category, CategorySchema, CATEGORY_TABLE };
+module.exports = { CategoryExtra, CategoryExtraSchema, CATEGORY_EXTRA_TABLE };

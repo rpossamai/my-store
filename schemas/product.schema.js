@@ -6,6 +6,8 @@ const price = Joi.number().integer().min(1);
 const description = Joi.string().min(10);
 const image = Joi.string().uri();
 const categoryId = Joi.number().integer();
+const storeId = Joi.number().integer();
+const productId = Joi.number().integer();
 
 const price_min = Joi.number().integer();
 const price_max = Joi.number().integer();
@@ -44,4 +46,11 @@ const queryProductSchema = Joi.object({
   })
 });
 
-module.exports = { createProductSchema, updateProductSchema, getProductSchema, queryProductSchema }
+const setEnableSchema = Joi.object({
+  storeId: storeId.required(),
+  productId: productId.required()
+  //,
+  //amount: amount.required(),
+});
+
+module.exports = { createProductSchema, updateProductSchema, getProductSchema, queryProductSchema, setEnableSchema }

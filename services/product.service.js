@@ -77,6 +77,11 @@ class ProductsService {
     return { rta: true };
   }
 
+  async setEnable(data) {
+    const newItem = await models.StoreProduct.create(data);
+    return newItem;
+  }
+
 }
 
 module.exports = ProductsService;
