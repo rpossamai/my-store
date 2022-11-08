@@ -22,14 +22,15 @@ router.get('/',
   }
 });
 
-//Busca primero el user, el owner y luego filtra la categoria en el where
-router.get('/owner',
+  //Servicio utilizado para buscar los productos por categorias
+  // con su disponibilidad asociada por tienda
+router.get('/products',
   //passport.authenticate('jwt', {session: false}),
   //checkRoles('admin', 'seller', 'customer'),
   validatorHandler(queryCategorySchema, 'query'),
   async (req, res, next) => {
   try {
-    const categories = await service.find(req.query);
+    const categories = await service.findByOwner(req.query);
     res.json(categories);
   } catch (error) {
     next(error);

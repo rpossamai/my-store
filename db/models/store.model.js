@@ -14,11 +14,12 @@ const StoreSchema =  {
   socialId: {
     allowNull: false,
     type: DataTypes.STRING,
+    field: 'social_id',
   },
   socialName: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'last_name',
+    field: 'social_name',
   },
   phone: {
     allowNull: true,

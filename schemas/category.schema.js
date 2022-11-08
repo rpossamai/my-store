@@ -26,8 +26,8 @@ const getCategorySchema = Joi.object({
 
 const queryCategorySchema = Joi.object({
   ownerId,
-  type
-  //storeId
+  storeId
+  //type
 });
 
 module.exports = { createCategorySchema, updateCategorySchema, getCategorySchema, queryCategorySchema }

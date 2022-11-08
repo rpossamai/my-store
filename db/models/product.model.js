@@ -51,6 +51,12 @@ class Product extends Model {
 
   static associate(models) {
     this.belongsTo(models.Category, { as: 'category' });
+    this.belongsToMany(models.Store, {
+      as: 'stores',
+      through: models.StoreProduct,
+      foreignKey: 'productId',
+      otherKey: 'storeId'
+    });
   }
 
   static config(sequelize) {

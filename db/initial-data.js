@@ -3,41 +3,44 @@ const bcrypt = require('bcrypt');
 ('use strict');
 
 const { UserSchema, USER_TABLE } = require('./../models/user.model');
-const { CustomerSchema, CUSTOMER_TABLE } = require('./../models/customer.model');
-const { CategorySchema, CATEGORY_TABLE } = require('./../models/category.model');
+const {
+  CustomerSchema,
+  CUSTOMER_TABLE,
+} = require('./../models/customer.model');
+const {
+  CategorySchema,
+  CATEGORY_TABLE,
+} = require('./../models/category.model');
 const { ProductSchema, PRODUCT_TABLE } = require('./../models/product.model');
-const { CategoryExtraSchema, CATEGORY_EXTRA_TABLE } = require('../models/category-extra.model');
-const { ProductExtraSchema, PRODUCT_EXTRA_TABLE } = require('../models/product-extra.model');
+const {
+  CategoryExtraSchema,
+  CATEGORY_EXTRA_TABLE,
+} = require('../models/category-extra.model');
+const {
+  ProductExtraSchema,
+  PRODUCT_EXTRA_TABLE,
+} = require('../models/product-extra.model');
 const { OrderSchema, ORDER_TABLE } = require('./../models/order.model');
-const { OrderProductSchema,  ORDER_PRODUCT_TABLE} = require('./../models/order-product.model');
+const {
+  OrderProductSchema,
+  ORDER_PRODUCT_TABLE,
+} = require('./../models/order-product.model');
 
 const { RoleSchema, ROLE_TABLE } = require('./../models/role.model');
-const {  LocationSchema,  LOCATION_TABLE} = require('./../models/location.model');
+const {
+  LocationSchema,
+  LOCATION_TABLE,
+} = require('./../models/location.model');
 const { OwnerSchema, OWNER_TABLE } = require('./../models/owner.model');
 const { StoreSchema, STORE_TABLE } = require('./../models/store.model');
-const { StoreProductSchema,STORE_PRODUCT_TABLE} = require('./../models/store-product.model');
-
-//const InitialData = require('./../initial-data');
-//const initialData = new InitialData();
+const {
+  StoreProductSchema,
+  STORE_PRODUCT_TABLE,
+} = require('./../models/store-product.model');
 
 module.exports = {
   async up(queryInterface) {
-    await queryInterface.createTable(USER_TABLE, UserSchema);
-    await queryInterface.createTable(OWNER_TABLE, OwnerSchema);
-    await queryInterface.createTable(STORE_TABLE, StoreSchema);
-    await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema);
-    await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
-    await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
-    await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
-    await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
-    await queryInterface.createTable(ORDER_TABLE, OrderSchema);
-    await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
-    await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
 
-    await queryInterface.createTable(ROLE_TABLE, RoleSchema);
-    await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
-
-    
     const hash = await bcrypt.hash('987654321', 10);
     await queryInterface.bulkInsert(USER_TABLE, [
       {
@@ -130,51 +133,11 @@ module.exports = {
 
     await queryInterface.bulkInsert(PRODUCT_TABLE, [
       {
-        name: 'Pepperoni Cheese Rolls',
-        price: 6,
-        description: '',
-        image: 'https://placeimg.com/640/480/animals',
-        category_id: 2,
-        created_at: new Date(),
-      },
-      {
-        name: 'Cheese Sticks',
-        price: 7,
-        description: '',
-        image: 'https://placeimg.com/640/480/animals',
-        category_id: 2,
-        created_at: new Date(),
-      },
-      {
-        name: 'Al Quadrado Chicken Wings',
-        price: 7,
-        description: '',
-        image: 'https://placeimg.com/640/480/animals',
-        category_id: 2,
-        created_at: new Date(),
-      },
-      {
-        name: 'Costillas Bbq + Papas',
-        price: 13,
-        description: '',
-        image: 'https://placeimg.com/640/480/animals',
-        category_id: 2,
-        created_at: new Date(),
-      },
-      {
         name: 'Chistobites',
-        price: 7,
+        price: 8,
         description: 'Bites rellenos de chistorra y queso crema',
         image: 'https://placeimg.com/640/480/animals',
         category_id: 2,
-        created_at: new Date(),
-      },
-      {
-        name: 'Pizza Margarita + 1 Ingred',
-        price: 12,
-        description: 'Queso mozarella, salsa Napole y full Jamón',
-        image: 'https://placeimg.com/640/480/animals',
-        category_id: 3,
         created_at: new Date(),
       },
       {
@@ -258,26 +221,8 @@ module.exports = {
       { product_id: 4,store_id: 1,status:true,created_at: new Date() },
       { product_id: 5,store_id: 1,status:true,created_at: new Date() },
       { product_id: 6,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 7,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 8,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 9,store_id: 1,status:true,created_at: new Date() },
     ]);
   },
 
-  async down(queryInterface) {
-    await queryInterface.dropTable(STORE_PRODUCT_TABLE);
-    await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
-    await queryInterface.dropTable(ORDER_TABLE);
-    await queryInterface.dropTable(PRODUCT_EXTRA_TABLE);
-    await queryInterface.dropTable(CATEGORY_EXTRA_TABLE);
-    await queryInterface.dropTable(PRODUCT_TABLE);
-    await queryInterface.dropTable(CATEGORY_TABLE);
-    await queryInterface.dropTable(CUSTOMER_TABLE);
-    await queryInterface.dropTable(STORE_TABLE);
-    await queryInterface.dropTable(OWNER_TABLE);
-    await queryInterface.dropTable(USER_TABLE);
 
-    await queryInterface.dropTable(ROLE_TABLE);
-    await queryInterface.dropTable(LOCATION_TABLE);
-  },
 };

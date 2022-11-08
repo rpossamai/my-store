@@ -16,26 +16,43 @@ class CategoryService {
       include: ['products'],
       where: {}
     }
-   /* const { ownerId } = query;
+    const { ownerId } = query;
     if (ownerId) {
       options.where.ownerId = ownerId;
-    }*/
-    const { type } = query;
+    }
+    /*const { type } = query;
     if (type) {
       options.where.type = type;
-    }
+    }*/
     //const owner = await models.Owner.findAll({where: { userId }});//owner tiene un campo user id
     const categories = await models.Category.findAll(options);
     return categories;
   }
 
-  //Busca primero el user, el owner y luego filtra la categoria en el where
+  //Servicio utilizado para buscar los productos por categorias
+  // con su disponibilidad asociada por tienda
   async findByOwner(query) {
-    const options = {
-      include: ['products'],
-      where: {}
+    const { ownerId,storeId } = query;
+    var options = '';
+
+    if (storeId) {
+      //options.where.products.stores.storeId = storeId;
+      options = {
+        include: [{
+          association: 'products',
+          include: ['stores']
+        }],
+        where: {'$products.stores.id$': storeId }
+      }
+    }else{
+      options = {
+        include: [{
+          association: 'products',
+          include: ['stores']
+        }],where: {}
+      }
     }
-    const { ownerId } = query;
+
     if (ownerId) {
       options.where.ownerId = ownerId;
     }

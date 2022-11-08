@@ -77,9 +77,15 @@ class ProductsService {
     return { rta: true };
   }
 
-  async setEnable(data) {
+  async setEnableStoreProduct(data) {
     const newItem = await models.StoreProduct.create(data);
     return newItem;
+  }
+
+  async setDisableStoreProduct(id) {
+    //const model = await models.StoreProduct.findByPk(id);
+    //await model.destroy();
+    //return { rta: true };
   }
 
 }

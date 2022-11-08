@@ -16,6 +16,22 @@ class UserService {
     return newUser;
   }
 
+  async createUserCustomer(data) {
+    const hash = await bcrypt.hash(data.password, 10);
+    const newData = {
+      ...data,
+      password: hash,
+      customer: {
+        ...data.customer
+      }
+    }
+    const newUser = await models.User.create(newData, {
+      include: ['customer']
+    });
+    delete newUser.dataValues.password;
+    return newUser;
+  }
+
   async find() {
     const rta = await models.User.findAll({
       include: ['customer']
