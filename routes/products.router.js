@@ -3,7 +3,7 @@ const express = require('express');
 const ProductsService = require('./../services/product.service');
 const validatorHandler = require('./../middlewares/validator.handler');
 const { createProductSchema, updateProductSchema, 
-  getProductSchema, queryProductSchema, setEnableSchema
+  getProductSchema, queryProductSchema, setStatusSchema
  } = require('./../schemas/product.schema');
 
 const router = express.Router();
@@ -47,6 +47,20 @@ router.post('/',
   }
 );
 
+//Creacion de product por owner, ademas agrega el status por store
+router.post('/store',
+  validatorHandler(createProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newProduct = await service.createProductStatus(body);     
+      res.status(201).json(newProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.patch('/:id',
   validatorHandler(getProductSchema, 'params'),
   validatorHandler(updateProductSchema, 'body'),
@@ -62,6 +76,22 @@ router.patch('/:id',
   }
 );
 
+//Modifica el status de producto para habilitarlo/deshabilitarlo
+router.patch('/:id/status',
+  validatorHandler(setStatusSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      //const { productId, storeId, status} = req.body;
+      const { id } = req.params; //idProduct
+      const body = req.body;
+      const product = await service.setProductStatus(id, body.storeId,body.status);
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.delete('/:id',
   validatorHandler(getProductSchema, 'params'),
   async (req, res, next) => {
@@ -69,21 +99,6 @@ router.delete('/:id',
       const { id } = req.params;
       await service.delete(id);
       res.status(201).json({id});
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-
-router.post(
-  '/enable',
-  validatorHandler(setEnableSchema, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const newItem = await service.setEnable(body);
-      res.status(201).json(newItem);
     } catch (error) {
       next(error);
     }

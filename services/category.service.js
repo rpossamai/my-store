@@ -11,7 +11,7 @@ class CategoryService {
     return newCategory;
   }
 
-  async find(query/*, userId*/) {
+  async find(query) {
     const options = {
       include: ['products'],
       where: {}
@@ -20,11 +20,6 @@ class CategoryService {
     if (ownerId) {
       options.where.ownerId = ownerId;
     }
-    /*const { type } = query;
-    if (type) {
-      options.where.type = type;
-    }*/
-    //const owner = await models.Owner.findAll({where: { userId }});//owner tiene un campo user id
     const categories = await models.Category.findAll(options);
     return categories;
   }
@@ -34,7 +29,6 @@ class CategoryService {
   async findByOwner(query) {
     const { ownerId,storeId } = query;
     var options = '';
-
     if (storeId) {
       //options.where.products.stores.storeId = storeId;
       options = {

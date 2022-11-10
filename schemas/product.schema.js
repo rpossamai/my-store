@@ -8,6 +8,8 @@ const image = Joi.string().uri();
 const categoryId = Joi.number().integer();
 const storeId = Joi.number().integer();
 const productId = Joi.number().integer();
+const ownerId = Joi.number().integer();
+const status = Joi.boolean();
 
 const price_min = Joi.number().integer();
 const price_max = Joi.number().integer();
@@ -21,6 +23,15 @@ const createProductSchema = Joi.object({
   description: description.required(),
   image: image.required(),
   categoryId: categoryId.required()
+});
+
+const createProductStoreSchema = Joi.object({
+  name: name.required(),
+  price: price.required(),
+  description: description.required(),
+  image: image.required(),
+  categoryId: categoryId.required(),
+  ownerId: ownerId.required()
 });
 
 const updateProductSchema = Joi.object({
@@ -46,11 +57,10 @@ const queryProductSchema = Joi.object({
   })
 });
 
-const setEnableSchema = Joi.object({
+const setStatusSchema = Joi.object({
+  //productId: productId.required(),
   storeId: storeId.required(),
-  productId: productId.required()
-  //,
-  //amount: amount.required(),
+  status: status.required()
 });
 
-module.exports = { createProductSchema, updateProductSchema, getProductSchema, queryProductSchema, setEnableSchema }
+module.exports = { createProductSchema, createProductStoreSchema, updateProductSchema, getProductSchema, queryProductSchema, setStatusSchema }

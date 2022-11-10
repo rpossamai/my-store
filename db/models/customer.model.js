@@ -21,8 +21,13 @@ const CustomerSchema =  {
     field: 'last_name',
   },
   phone: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING,
+    unique: true,
+  },
+  photo: {
+    allowNull: true,
+    type: DataTypes.BLOB
   },
   createdAt: {
     allowNull: false,

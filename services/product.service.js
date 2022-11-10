@@ -4,10 +4,13 @@ const boom = require('@hapi/boom');
 
 const { models } = require('../libs/sequelize');
 
-class ProductsService {
+const StoreService = require('./store.service');
+const storeService = new StoreService();
+const CategoryService = require('./category.service');
+const serviceCategory = new CategoryService();
 
-  constructor(){
-  }
+class ProductsService {
+  constructor() {}
 
   async create(data) {
     const newProduct = await models.Product.create(data);
@@ -17,12 +20,12 @@ class ProductsService {
   async find(query) {
     const options = {
       include: ['category'],
-      where: {}
-    }
+      where: {},
+    };
     const { limit, offset } = query;
     if (limit && offset) {
-      options.limit =  limit;
-      options.offset =  offset;
+      options.limit = limit;
+      options.offset = offset;
     }
 
     const { price } = query;
@@ -53,7 +56,7 @@ class ProductsService {
     return product;
   }
 
- /* async update(id, changes) {
+  /* async update(id, changes) {
     const index = this.products.findIndex(item => item.id === id);
     if (index === -1) {
       throw boom.notFound('product not found');
@@ -77,15 +80,33 @@ class ProductsService {
     return { rta: true };
   }
 
-  async setEnableStoreProduct(data) {
-    const newItem = await models.StoreProduct.create(data);
-    return newItem;
+  async createProductStatus(body) {
+    const newProduct = await this.create(body);
+    const category = await serviceCategory.findOne(newProduct.categoryId);
+    
+    var payload = { productId: newProduct.id, status: true };
+
+    const stores = await storeService.find(category.ownerId);
+    for (const store of stores.values()) {  
+      payload.storeId= store.id;
+      await models.StoreProduct.create(payload);
+      //console.log(`payload item: ${JSON.stringify(payload)}`);
+    }
+    
+    return newProduct;
   }
 
-  async setDisableStoreProduct(id) {
-    //const model = await models.StoreProduct.findByPk(id);
-    //await model.destroy();
-    //return { rta: true };
+  async setProductStatus(productId, storeId, status) {
+    // const productModel = await models.StoreProduct.findOne({
+    //   where: { productId: productId, storeId: storeId}});
+    //if (!productModel) {throw boom.notFound('product not found in the store');} else {
+    const rta = await models.StoreProduct.update(
+        { status: status },
+        { where: { productId: productId, storeId: storeId}});//}
+    if (rta==0) {
+      throw boom.notFound('product not found in the store');
+    }
+    return rta;
   }
 
 }

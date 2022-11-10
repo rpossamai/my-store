@@ -2,7 +2,7 @@ const express = require('express');
 
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validator.handler');
-const { updateUserSchema, createUserSchema, getUserSchema,createUserCustomerSchema } = require('./../schemas/user.schema');
+const { updateUserSchema, createUserSchema, getUserUsernameSchema, getUserSchema,createUserCustomerSchema } = require('./../schemas/user.schema');
 
 const router = express.Router();
 const service = new UserService();
@@ -15,6 +15,19 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
+
+router.get('/find-by-username',
+validatorHandler(getUserUsernameSchema, 'body'),
+async (req, res, next) => {
+  try {
+    const username = req.body.username;
+    const user = await service.findByUsername(username);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+);
 
 router.get('/:id',
   validatorHandler(getUserSchema, 'params'),

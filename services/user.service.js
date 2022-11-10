@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt');
 
 const { models } = require('./../libs/sequelize');
 
+const CustomerService = require('./customer.service');
+const customerService = new CustomerService();
+
 class UserService {
   constructor() {}
 
@@ -29,14 +32,15 @@ class UserService {
       include: ['customer']
     });
     delete newUser.dataValues.password;
+    delete newUser.customer.dataValues.photo;
     return newUser;
   }
 
   async find() {
-    const rta = await models.User.findAll({
-      include: ['customer']
+    const users = await models.User.findAll({
+      //include: ['customer']
     });
-    return rta;
+    return users;
   }
 
   async findByEmail(email) {
@@ -53,6 +57,24 @@ class UserService {
     if (!user) {
       throw boom.notFound('user not found');
     }
+    return user;
+  }
+
+  async findByUsername(username) {
+    var user;
+    if (username.indexOf('@') == -1) {
+      const customer = await customerService.findByPhone(username);
+      if (!customer) {
+        throw boom.notFound();
+      }
+      user = await this.findOne(customer.userId);
+    } else {
+      user = await this.findByEmail(username);
+    }
+    if (!user) {
+      throw boom.notFound();
+    }
+    delete user.dataValues.password;
     return user;
   }
 

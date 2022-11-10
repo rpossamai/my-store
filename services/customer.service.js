@@ -41,6 +41,7 @@ class CustomerService {
       include: ['user']
     });
     delete newCustomer.dataValues.user.dataValues.password;
+    delete newCustomer.dataValues.photo;
     return newCustomer;
   }
 

@@ -8,6 +8,9 @@ const role = Joi.string().min(5);
 const name = Joi.string().min(3).max(30);
 const lastName = Joi.string();
 const phone =  Joi.string();
+const photo =  Joi.string();
+
+const username = Joi.string();
 
 const createUserSchema = Joi.object({
   email: email.required(),
@@ -22,7 +25,8 @@ const createUserCustomerSchema = Joi.object({
   customer: Joi.object({
     name: name.required(),
     lastName: lastName.required(),
-    phone: phone.required()
+    phone: phone.required(),
+    photo: photo.optional()
   })
 });
 
@@ -35,4 +39,8 @@ const getUserSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserSchema, updateUserSchema, getUserSchema, createUserCustomerSchema }
+const getUserUsernameSchema = Joi.object({
+  username: username.required(),
+});
+
+module.exports = { createUserSchema, updateUserSchema, getUserSchema, getUserUsernameSchema, createUserCustomerSchema }
