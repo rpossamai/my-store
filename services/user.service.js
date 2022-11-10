@@ -75,6 +75,7 @@ class UserService {
       throw boom.notFound();
     }
     delete user.dataValues.password;
+    delete user.customer.dataValues.photo;
     return user;
   }
 
