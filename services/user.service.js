@@ -68,6 +68,7 @@ class UserService {
         throw boom.notFound();
       }
       user = await this.findOne(customer.userId);
+      delete user.customer.dataValues.photo;
     } else {
       user = await this.findByEmail(username);
     }
@@ -75,7 +76,6 @@ class UserService {
       throw boom.notFound();
     }
     delete user.dataValues.password;
-    delete user.customer.dataValues.photo;
     return user;
   }
 

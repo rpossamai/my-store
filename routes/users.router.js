@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/find-by-username',
+router.post('/find-by-username',
 validatorHandler(getUserUsernameSchema, 'body'),
 async (req, res, next) => {
   try {
