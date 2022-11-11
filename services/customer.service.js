@@ -48,6 +48,7 @@ class CustomerService {
   async update(id, changes) {
     const model = await this.findOne(id);
     const rta = await model.update(changes);
+    delete rta.dataValues.photo;
     return rta;
   }
 

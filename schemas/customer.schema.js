@@ -29,6 +29,7 @@ const updateCustomerSchema = Joi.object({
   name,
   lastName,
   phone,
+  photo,
   userId
 });
 

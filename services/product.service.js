@@ -75,6 +75,7 @@ class ProductsService {
   }
 
   async delete(id) {
+    await models.StoreProduct.destroy({where: { productId: id }});
     const model = await this.findOne(id);
     await model.destroy();
     return { rta: true };
