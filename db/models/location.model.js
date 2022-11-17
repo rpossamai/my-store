@@ -11,12 +11,27 @@ const LocationSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  name: {
+  address: {
     allowNull: false,
     type: DataTypes.STRING,
     unique: false,
-  },  
-  description: {
+  }, 
+  number: {
+    allowNull: true,
+    type: DataTypes.STRING,
+    unique: false,
+  },
+  city: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: false,
+  },
+  state: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: false,
+  }, 
+  reference: {
     allowNull: true,
     type: DataTypes.STRING,
     unique: false,
@@ -31,11 +46,11 @@ const LocationSchema = {
     type: DataTypes.STRING,
     unique: false,
   }, 
-  /*type: {
-    allowNull: true,
+  type: {
+    allowNull: false,
     type: DataTypes.STRING,
     unique: false,
-  },*/
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

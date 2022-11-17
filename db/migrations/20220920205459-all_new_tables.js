@@ -115,7 +115,7 @@ module.exports = {
       {
         name: 'Pepperoni Cheese Rolls',
         price: 6,
-        description: '',
+        description: '6 enrrollados de pepperoni + queso ozarella perfectamente horneados + salsa alquadrado para untar.',
         image: 'https://i.imgur.com/Fzaz6Rw.png',
         category_id: 2,
         created_at: new Date(),
@@ -131,15 +131,15 @@ module.exports = {
       {
         name: 'Al Quadrado Chicken Wings',
         price: 7,
-        description: '',
-        image: '',
+        description: '12 alitas de pollo Bbq + papas fritas',
+        image: ' https://i.imgur.com/fuPOBfy.jpg',
         category_id: 2,
         created_at: new Date(),
       },
       {
         name: 'Costillas Bbq + Papas',
         price: 13,
-        description: '',
+        description: '1Kg de costillas Bbq +250gr de papas fritas',
         image: 'https://i.imgur.com/2pBFE8R.png',
         category_id: 2,
         created_at: new Date(),
@@ -147,7 +147,7 @@ module.exports = {
       {
         name: 'Chistobites',
         price: 7,
-        description: 'Bites rellenos de chistorra y queso crema',
+        description: 'Delicioasos Bites rellenos de chistorra y queso crema con toppiong de mantequilla de ajo y ajonjoli. (incluye salsa de la casa para untar).',
         image: 'https://i.imgur.com/8q0PGYJ.png',
         category_id: 2,
         created_at: new Date(),
@@ -283,18 +283,26 @@ module.exports = {
 
     await queryInterface.bulkInsert(LOCATION_TABLE, [
       {
-        name: 'CARACAS',
-        description: 'tiendas que estan localizadas en caracas',
+        address: 'CARACAS',
+        number:'1',
+        city:'caracas',
+        state:'miranda',
+        reference: 'tiendas que estan localizadas en caracas',
         latitude: '-66.921608',
         longitude: '10.504851',
+        type: 'OWNER',
         user_id: 2,
         created_at: new Date()
       },
       {
-        name: 'ALTOS_MIRANDINOS',
-        description: 'tiendas que estan localizadas en los altos mirandinos',
+        address: 'ALTOS_MIRANDINOS',
+        number:'1',
+        city:'san antonio de los altos',
+        state:'miranda',
+        reference: 'tiendas que estan localizadas en los altos mirandinos',
         latitude: '10.381363302434657',
         longitude: '-66.96636946424778',
+        type: 'OWNER',
         user_id: 2,
         created_at: new Date()
       }

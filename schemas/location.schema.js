@@ -1,10 +1,14 @@
 const Joi = require('joi');
 
 const id = Joi.number().integer();
-const name = Joi.string();
-const description = Joi.string();
+const address = Joi.string();
+const number = Joi.string();
+const city = Joi.string();
+const state = Joi.string();
+const reference = Joi.string();
 const longitude = Joi.string();
 const latitude = Joi.string();
+const type = Joi.string();
 const userId = Joi.number().integer();
 
 const getLocationSchema = Joi.object({
@@ -12,18 +16,26 @@ const getLocationSchema = Joi.object({
 });
 
 const createLocationSchema = Joi.object({
-  name : name.required(),
-  description : description.optional(),
+  address : address.required(),
+  number : number.optional(),
+  city : city.required(),
+  state : state.required(),
+  reference : reference.optional(),
   longitude : longitude.required(),
   latitude : latitude.required(),
+  type : type.required(),
   userId : userId.required(),
 });
 
 const updateLocationSchema = Joi.object({
-  name,
-  description,
+  address,
+  number,
+  city,
+  state,
+  reference,
   longitude,
-  latitude
+  latitude,
+  type
 });
 
 
