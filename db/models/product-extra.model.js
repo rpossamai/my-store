@@ -47,8 +47,15 @@ const ProductExtraSchema = {
 };
 
 class ProductExtra extends Model {
+
   static associate(models) {
     this.belongsTo(models.CategoryExtra, { as: 'categoryExtra' });
+    this.belongsToMany(models.Store, {
+      as: 'stores',
+      through: models.StoreProductExtra,
+      foreignKey: 'productExtraId',
+      otherKey: 'storeId'
+    });
   }
 
   static config(sequelize) {

@@ -26,10 +26,6 @@ const CategoryExtraSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   ownerId: {
     field: 'owner_id',
     allowNull: false,
@@ -45,12 +41,18 @@ const CategoryExtraSchema = {
 
 
 class CategoryExtra extends Model {
-
   static associate(models) {
     this.belongsTo(models.Owner, { as: 'owner' });
     this.hasMany(models.ProductExtra, {
-      as: 'products_extra',
-      foreignKey: 'categoryExtraId'
+      as: 'productsExtra',
+      foreignKey: 'categoryExtraId',
+    });
+    //indica que una categoria-extra(adicional) esta disponible a uno o muchos productos
+    this.belongsToMany(models.Product, {
+      as: 'products',
+      through: models.CategoryExtraProduct,
+      foreignKey: 'categoryExtraId',
+      otherKey: 'productId',
     });
   }
 
@@ -59,8 +61,8 @@ class CategoryExtra extends Model {
       sequelize,
       tableName: CATEGORY_EXTRA_TABLE,
       modelName: 'CategoryExtra',
-      timestamps: false
-    }
+      timestamps: false,
+    };
   }
 }
 

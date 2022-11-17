@@ -22,6 +22,7 @@ class AuthService {
         throw boom.notFound();
       }
       user = await service.findOne(customer.userId);
+      delete user.customer.dataValues.photo;
     } else {
       user = await service.findByEmail(username);
     }
@@ -36,9 +37,10 @@ class AuthService {
     return user;
   }
 
-  signToken(user) {
+  signToken(user,customerId) {
     const payload = {
       sub: user.id,
+      customerId: customerId,
       role: user.role,
     };
     const token = jwt.sign(payload, config.jwtSecret);

@@ -10,8 +10,12 @@ router.post('/login',
   passport.authenticate('local', {session: false}),
   async (req, res, next) => {
     try {
+      var customerId=0;
       const user = req.user;
-      res.json(service.signToken(user));
+      if(user.customer){
+        customerId=user.customer.id;
+      }
+      res.json(service.signToken(user,customerId));
     } catch (error) {
       next(error);
     }
@@ -22,8 +26,12 @@ router.post('/login/customer',
   passport.authenticate('local', {session: false}),
   async (req, res, next) => {
     try {
+      var customerId=0;
       const user = req.user;
-      res.json(service.signToken(user));
+      if(user.customer){
+        customerId=user.customer.id;
+      }
+      res.json(service.signToken(user,customerId));
     } catch (error) {
       next(error);
     }

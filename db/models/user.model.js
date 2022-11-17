@@ -44,7 +44,11 @@ class User extends Model {
     });
     this.hasOne(models.Owner, {
       as: 'owner',
-      foreignKey: 'ownerId'
+      foreignKey: 'userId'
+    });
+    this.hasMany(models.Location, {
+      as: 'locations',
+      foreignKey: 'userId'
     });
   }
 

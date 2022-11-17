@@ -2,10 +2,7 @@ const { User, UserSchema } = require('./user.model');
 const { Customer, CustomerSchema } = require('./customer.model');
 const { Category, CategorySchema } = require('./category.model');
 const { Product, ProductSchema } = require('./product.model');
-const {
-  CategoryExtra,
-  CategoryExtraSchema,
-} = require('./category-extra.model');
+const { CategoryExtra, CategoryExtraSchema } = require('./category-extra.model');
 const { ProductExtra, ProductExtraSchema } = require('./product-extra.model');
 const { Order, OrderSchema } = require('./order.model');
 const { OrderProduct, OrderProductSchema } = require('./order-product.model');
@@ -14,6 +11,8 @@ const { Store, StoreSchema } = require('./store.model');
 const { Role, RoleSchema } = require('./role.model');
 const { Location, LocationSchema } = require('./location.model');
 const { StoreProduct, StoreProductSchema } = require('./store-product.model');
+const { StoreProductExtra, StoreProductExtraSchema } = require('./store-product-extra.model');
+const { CategoryExtraProduct, CategoryExtraProductSchema } = require('./category-extra-product.model');
 
 function setupModels(sequelize) {
   Owner.init(OwnerSchema, Owner.config(sequelize));
@@ -28,7 +27,8 @@ function setupModels(sequelize) {
   Order.init(OrderSchema, Order.config(sequelize));
   OrderProduct.init(OrderProductSchema, OrderProduct.config(sequelize));
   StoreProduct.init(StoreProductSchema, StoreProduct.config(sequelize));
-
+  StoreProductExtra.init(StoreProductExtraSchema, StoreProductExtra.config(sequelize));
+  CategoryExtraProduct.init(CategoryExtraProductSchema, CategoryExtraProduct.config(sequelize));
   Role.init(RoleSchema, Role.config(sequelize));
   Location.init(LocationSchema, Location.config(sequelize));
 
