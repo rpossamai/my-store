@@ -55,6 +55,7 @@ class Product extends Model {
       foreignKey: 'productId',
       otherKey: 'storeId',
     });
+    
     //indica que un producto tiene muchas categorias de adicionales (category-extra)
     /*this.belongsToMany(models.CategoryExtra, {
       as: 'categoriesExtra',

@@ -6,6 +6,7 @@ const { CategoryExtra, CategoryExtraSchema } = require('./category-extra.model')
 const { ProductExtra, ProductExtraSchema } = require('./product-extra.model');
 const { Order, OrderSchema } = require('./order.model');
 const { OrderProduct, OrderProductSchema } = require('./order-product.model');
+const { OrderProductProductExtra, OrderProductProductExtraSchema } = require('./order-product-product-extra.model');
 const { Owner, OwnerSchema } = require('./owner.model');
 const { Store, StoreSchema } = require('./store.model');
 const { Role, RoleSchema } = require('./role.model');
@@ -26,6 +27,7 @@ function setupModels(sequelize) {
   ProductExtra.init(ProductExtraSchema, ProductExtra.config(sequelize));
   Order.init(OrderSchema, Order.config(sequelize));
   OrderProduct.init(OrderProductSchema, OrderProduct.config(sequelize));
+  OrderProductProductExtra.init(OrderProductProductExtraSchema, OrderProductProductExtra.config(sequelize));
   StoreProduct.init(StoreProductSchema, StoreProduct.config(sequelize));
   StoreProductExtra.init(StoreProductExtraSchema, StoreProductExtra.config(sequelize));
   CategoryExtraProduct.init(CategoryExtraProductSchema, CategoryExtraProduct.config(sequelize));
@@ -41,6 +43,7 @@ function setupModels(sequelize) {
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
   Order.associate(sequelize.models);
+  OrderProduct.associate(sequelize.models);
 
   //Role.associate(sequelize.models);
   //Store.associate(sequelize.models);

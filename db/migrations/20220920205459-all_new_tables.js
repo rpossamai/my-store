@@ -10,6 +10,7 @@ const { CategoryExtraSchema, CATEGORY_EXTRA_TABLE } = require('../models/categor
 const { ProductExtraSchema, PRODUCT_EXTRA_TABLE } = require('../models/product-extra.model');
 const { OrderSchema, ORDER_TABLE } = require('./../models/order.model');
 const { OrderProductSchema,  ORDER_PRODUCT_TABLE} = require('./../models/order-product.model');
+const { OrderProductProductExtraSchema,  ORDER_PRODUCT_PRODUCT_EXTRA_TABLE} = require('./../models/order-product-product-extra.model');
 
 const { RoleSchema, ROLE_TABLE } = require('./../models/role.model');
 const { LocationSchema,  LOCATION_TABLE} = require('./../models/location.model');
@@ -34,6 +35,7 @@ module.exports = {
     await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
+    await queryInterface.createTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE, OrderProductProductExtraSchema);
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
     await queryInterface.createTable(STORE_PRODUCT_EXTRA_TABLE, StoreProductExtraSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_PRODUCT_TABLE, CategoryExtraProductSchema);
@@ -132,7 +134,7 @@ module.exports = {
         name: 'Al Quadrado Chicken Wings',
         price: 7,
         description: '12 alitas de pollo Bbq + papas fritas',
-        image: ' https://i.imgur.com/fuPOBfy.jpg',
+        image: 'https://i.imgur.com/RldqANf.jpg',
         category_id: 2,
         created_at: new Date(),
       },
@@ -183,6 +185,102 @@ module.exports = {
         image: 'https://i.imgur.com/UByzcBJ.png',
         category_id: 3,
         created_at: new Date(),
+      },
+      {
+        name: 'Pizza Hawaiana',
+        price: 10,
+        description: 'Queso mozarella, salsa Napole y piña',
+        image: 'https://i.imgur.com/UByzcBJ.png',
+        category_id: 3,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Pizza 4 Estaciones',
+        price: 12,
+        description: 'Queso mozarella, salsa Napole y 4 Estaciones',
+        image: 'https://i.imgur.com/d7ELQE2.png',
+        category_id: 3,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Pizza Primavera',
+        price: 12,
+        description: 'Queso mozarella, salsa Napole y 4 Estaciones',
+        image: 'https://i.imgur.com/HqapVaZ.png',
+        category_id: 3,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Pizza Pepperoni',
+        price: 12,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/l3wcozu.jpg',
+        category_id: 3,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Pizza Vegetariana',
+        price: 12,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/KxvaNEm.png',
+        category_id: 3,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Pizza Tocineitor',
+        price: 14,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/BlyXqUV.png',
+        category_id: 4,
+        created_at: new Date(),
+      },
+	  	{
+        name: 'Pizza Al Quadrado Especial',
+        price: 14,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/MVoCKUx.png',
+        category_id: 4,
+        created_at: new Date(),
+      },
+	  	{
+        name: 'Pizza Montserratina',
+        price: 14,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/KkTdG4T.png',
+        category_id: 4,
+        created_at: new Date(),
+      },
+	  	{
+        name: 'Pizza Vegetariana Doble',
+        price: 14,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/CqOINbL.jpg',
+        category_id: 4,
+        created_at: new Date(),
+      },
+	  	{
+        name: 'Pizza Triple Pepperoni',
+        price: 15,
+        description: 'Queso mozarella, salsa Napole',
+        image: 'https://i.imgur.com/f4TSJ2O.png',
+        category_id: 4,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Galleta Extra Grande Marmoleada',
+        price: 3,
+        description: 'Galleta Extra Grande Marmoleada.',
+        image: 'https://i.imgur.com/rUjIzLw.png',
+        category_id: 5,
+        created_at: new Date(),
+      },
+	    {
+        name: 'Galleta Extra Grande Chocolate',
+        price: 3,
+        description: 'Galleta Extra Grande Chocolate.',
+        image: 'https://i.imgur.com/rUjIzLw.png',
+        category_id: 5,
+        created_at: new Date(),
       }
     ]);
 
@@ -225,9 +323,49 @@ module.exports = {
         created_at: new Date(),
       },
       {
-        name: 'Borde de Queso',
+        name: 'Maíz',
         price: 1,
-        description: 'Borde de Queso',
+        description: 'extra de Maíz',
+        image: '',
+        category_extra_id: 1,
+        created_at: new Date(),
+      },
+      {
+        name: 'Chistorra',
+        price: 1,
+        description: 'extra de chistorra',
+        image: '',
+        category_extra_id: 1,
+        created_at: new Date(),
+      },
+      {
+        name: 'Tocineta',
+        price: 1,
+        description: 'extra de chistorra',
+        image: '',
+        category_extra_id: 1,
+        created_at: new Date(),
+      },
+      {
+        name: 'Borde de Queso Mozzarella',
+        price: 1,
+        description: 'Borde de Queso Mozzarella',
+        image: '',
+        category_extra_id: 2,
+        created_at: new Date(),
+      },
+      {
+        name: 'Borde de Queso Crema',
+        price: 1,
+        description: 'Borde de Queso Crema',
+        image: '',
+        category_extra_id: 2,
+        created_at: new Date(),
+      },
+      {
+        name: 'Borde de Chistorra',
+        price: 1,
+        description: 'Borde de Chistorra',
         image: '',
         category_extra_id: 2,
         created_at: new Date(),
@@ -260,6 +398,18 @@ module.exports = {
       { product_id: 7,store_id: 1,status:true,created_at: new Date() },
       { product_id: 8,store_id: 1,status:true,created_at: new Date() },
       { product_id: 9,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 10,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 11,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 12,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 13,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 14,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 15,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 16,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 17,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 18,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 19,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 20,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 21,store_id: 1,status:true,created_at: new Date() },
     ]);
 
     await queryInterface.bulkInsert(STORE_PRODUCT_EXTRA_TABLE, [
@@ -267,6 +417,11 @@ module.exports = {
       { product_extra_id: 2,store_id: 1,status:true,created_at: new Date() },
       { product_extra_id: 3,store_id: 1,status:true,created_at: new Date() },
       { product_extra_id: 4,store_id: 1,status:true,created_at: new Date() },
+      { product_extra_id: 5,store_id: 1,status:true,created_at: new Date() },
+      { product_extra_id: 6,store_id: 1,status:true,created_at: new Date() },
+      { product_extra_id: 7,store_id: 1,status:true,created_at: new Date() },
+      { product_extra_id: 8,store_id: 1,status:true,created_at: new Date() },
+      { product_extra_id: 9,store_id: 1,status:true,created_at: new Date() },
     ]);
 
     await queryInterface.bulkInsert(CATEGORY_EXTRA_PRODUCT_TABLE, [
@@ -279,6 +434,36 @@ module.exports = {
       { product_id: 9,category_extra_id: 1,status:true,created_at: new Date() },
       { product_id: 9,category_extra_id: 2,status:true,created_at: new Date() },
       { product_id: 9,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 10,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 10,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 10,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 11,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 11,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 11,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 12,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 12,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 12,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 13,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 13,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 13,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 14,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 14,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 14,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 15,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 15,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 15,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 16,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 16,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 16,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 17,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 17,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 17,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 18,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 18,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 18,category_extra_id: 3,status:true,created_at: new Date() },
+      { product_id: 19,category_extra_id: 1,status:true,created_at: new Date() },
+      { product_id: 19,category_extra_id: 2,status:true,created_at: new Date() },
+      { product_id: 19,category_extra_id: 3,status:true,created_at: new Date() },
     ]);
 
     await queryInterface.bulkInsert(LOCATION_TABLE, [
@@ -316,6 +501,7 @@ module.exports = {
     await queryInterface.dropTable(CATEGORY_EXTRA_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_EXTRA_TABLE);
+    await queryInterface.dropTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
     await queryInterface.dropTable(ORDER_TABLE);
     await queryInterface.dropTable(PRODUCT_EXTRA_TABLE);

@@ -30,10 +30,26 @@ const OrderSchema = {
   total: {
     type: DataTypes.FLOAT,
     get() {
-      if (this.items != null) {
+      /*if (this.items != null) {
         if (this.items.length > 0) {
           return this.items.reduce((total, item) => {
             return total + (item.price * item.OrderProduct.amount);
+          }, 0);
+        }
+      }*/
+      if (this.orderProducts != null) {       
+        if (this.orderProducts.length > 0) {
+          return this.orderProducts.reduce((total, orderProduct) => { 
+            total = total + (orderProduct.product.price * orderProduct.amount);
+            
+            orderProduct.extras.reduce((totalExtra, extra) => {
+              total= total + (extra.price * orderProduct.amount);
+              console.log('total+Extra:'+total);
+              return totalExtra;
+            }, 0);
+
+            console.log('total:'+total);
+            return total;
           }, 0);
         }
       }
@@ -41,7 +57,6 @@ const OrderSchema = {
     },
   },
 };
-
 
 class Order extends Model {
 
@@ -54,6 +69,10 @@ class Order extends Model {
       through: models.OrderProduct,
       foreignKey: 'orderId',
       otherKey: 'productId'
+    });
+    this.hasMany(models.OrderProduct, {
+      as: 'orderProducts',
+      foreignKey: 'orderId'
     });
   }
 

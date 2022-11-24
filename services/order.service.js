@@ -12,8 +12,40 @@ class OrderService {
     return newOrder;
   }
 
-  async addItem(data) {
+  async createOrderProducts(data) {
+    const newOrder = await models.Order.create(data);
+    return newOrder;
+  }
+
+  /*async addItem(data) {
     const newItem = await models.OrderProduct.create(data);
+    return newItem;
+  }*/
+
+  async addItem(data) { 
+    const newItem = await models.OrderProduct.create(data);
+
+    var extrasList=[];
+    var extraPayload = {};
+    if(data.extras){
+      for (const extra of data.extras.values()) {
+        extraPayload = {};
+        extraPayload ['orderProductId'] = newItem.id;
+        extraPayload ['productExtraId'] = extra.productExtraId
+        //extraPayload.productExtraId = extra.productExtraId;
+        //extrasList[i]=extraPayload;
+        extrasList.push(extraPayload);
+      }
+      console.log('Extras:');
+      console.log(extrasList);
+      await models.OrderProductProductExtra.bulkCreate(extrasList, 
+        { returning: true }) // will return all columns for each row inserted
+        .then((result) => {
+          //console.log(result);  
+        });
+        
+    }else{console.log('extrasList VACIA');}
+
     return newItem;
   }
 
@@ -25,16 +57,17 @@ class OrderService {
       include: [
         {
           association: 'customer',
-          include: ['user']
-        },
-        'items'
+          attributes: {exclude: ['photo']},
+          include: [{association: 'user',
+          attributes: {exclude: ['password','recoveryToken']}}]
+        },//,'items'
+        {
+          association: 'orderProducts',
+          include: ['product','extras']   
+        }  
       ]
     });
     return orders;
-  }
-
-  async find() {
-    return [];
   }
 
   async findOne(id) {
@@ -42,9 +75,14 @@ class OrderService {
       include: [
         {
           association: 'customer',
-          include: ['user']
-        },
-        'items'
+          attributes: {exclude: ['photo']},
+          include: [{association: 'user',
+          attributes: {exclude: ['password','recoveryToken']}}]
+        },//{ association: 'items' },
+        {
+          association: 'orderProducts',
+          include: ['product','extras']   
+        }    
       ]
     });
     return order;

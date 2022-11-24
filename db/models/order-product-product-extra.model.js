@@ -1,11 +1,11 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-const { ORDER_TABLE } = require('./order.model');
-const { PRODUCT_TABLE } = require('./product.model');
+const { ORDER_PRODUCT_TABLE } = require('./order-product.model');
+const { PRODUCT_EXTRA_TABLE } = require('./product-extra.model');
 
-const ORDER_PRODUCT_TABLE = 'orders_products';
+const ORDER_PRODUCT_PRODUCT_EXTRA_TABLE = 'orders_products_products_extra';
 
-const OrderProductSchema =  {
+const OrderProductProductExtraSchema =  {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -18,27 +18,27 @@ const OrderProductSchema =  {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
-  amount: {
+ /* amount: {
     allowNull: false,
     type: DataTypes.INTEGER
-  },
-  orderId: {
-    field: 'order_id',
+  },*/
+  orderProductId: {
+    field: 'order_product_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-      model: ORDER_TABLE,
+      model: ORDER_PRODUCT_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  productId: {
-    field: 'product_id',
+  productExtraId: {
+    field: 'product_extra_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-      model: PRODUCT_TABLE,
+      model: PRODUCT_EXTRA_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
@@ -46,26 +46,20 @@ const OrderProductSchema =  {
   }
 }
 
-class OrderProduct extends Model {
+class OrderProductProductExtra extends Model {
 
   static associate(models) {
-    this.belongsTo(models.Product, {as: 'product'});
-    this.belongsToMany(models.ProductExtra, {
-      as: 'extras',
-      through: models.OrderProductProductExtra,
-      foreignKey: 'orderProductId',
-      otherKey: 'productExtraId'
-    });
+    //
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: ORDER_PRODUCT_TABLE,
-      modelName: 'OrderProduct',
+      tableName: ORDER_PRODUCT_PRODUCT_EXTRA_TABLE,
+      modelName: 'OrderProductProductExtra',
       timestamps: false
     }
   }
 }
 
-module.exports = { OrderProduct, OrderProductSchema, ORDER_PRODUCT_TABLE };
+module.exports = { OrderProductProductExtra, OrderProductProductExtraSchema, ORDER_PRODUCT_PRODUCT_EXTRA_TABLE };

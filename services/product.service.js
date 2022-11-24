@@ -89,7 +89,7 @@ class ProductsService {
 
     const stores = await storeService.find(category.ownerId);
     for (const store of stores.values()) {  
-      payload.storeId= store.id;
+      payload.storeId = store.id;
       await models.StoreProduct.create(payload);
       //console.log(`payload item: ${JSON.stringify(payload)}`);
     }
