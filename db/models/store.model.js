@@ -54,6 +54,10 @@ class Store extends Model {
       foreignKey: 'storeId',
       otherKey: 'productId'
     });
+    this.hasMany(models.PaymentMethod, {
+      as: 'paymentMethods',
+      foreignKey: 'storeId'
+    });
   }
 
   static config(sequelize) {

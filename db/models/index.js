@@ -14,6 +14,7 @@ const { Location, LocationSchema } = require('./location.model');
 const { StoreProduct, StoreProductSchema } = require('./store-product.model');
 const { StoreProductExtra, StoreProductExtraSchema } = require('./store-product-extra.model');
 const { CategoryExtraProduct, CategoryExtraProductSchema } = require('./category-extra-product.model');
+const { PaymentMethod, PaymentMethodSchema } = require('./payment-method.model');
 
 function setupModels(sequelize) {
   Owner.init(OwnerSchema, Owner.config(sequelize));
@@ -33,6 +34,7 @@ function setupModels(sequelize) {
   CategoryExtraProduct.init(CategoryExtraProductSchema, CategoryExtraProduct.config(sequelize));
   Role.init(RoleSchema, Role.config(sequelize));
   Location.init(LocationSchema, Location.config(sequelize));
+  PaymentMethod.init(PaymentMethodSchema, PaymentMethod.config(sequelize));
 
   User.associate(sequelize.models);
   Owner.associate(sequelize.models);
@@ -44,6 +46,8 @@ function setupModels(sequelize) {
   Product.associate(sequelize.models);
   Order.associate(sequelize.models);
   OrderProduct.associate(sequelize.models);
+  Location.associate(sequelize.models);
+  PaymentMethod.associate(sequelize.models);
 
   //Role.associate(sequelize.models);
   //Store.associate(sequelize.models);

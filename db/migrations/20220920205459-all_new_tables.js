@@ -19,6 +19,7 @@ const { StoreSchema, STORE_TABLE } = require('./../models/store.model');
 const { StoreProductSchema,STORE_PRODUCT_TABLE} = require('./../models/store-product.model');
 const { StoreProductExtraSchema,STORE_PRODUCT_EXTRA_TABLE} = require('./../models/store-product-extra.model');
 const { CategoryExtraProductSchema, CATEGORY_EXTRA_PRODUCT_TABLE } = require('../models/category-extra-product.model');
+const { PaymentMethodSchema, PAYMENT_METHODS_TABLE } = require('./../models/payment-method.model');
 
 //const InitialData = require('./../initial-data');
 //const initialData = new InitialData();
@@ -39,7 +40,8 @@ module.exports = {
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
     await queryInterface.createTable(STORE_PRODUCT_EXTRA_TABLE, StoreProductExtraSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_PRODUCT_TABLE, CategoryExtraProductSchema);
-    
+    await queryInterface.createTable(PAYMENT_METHODS_TABLE, PaymentMethodSchema);
+
     await queryInterface.createTable(ROLE_TABLE, RoleSchema);
     await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
 
@@ -498,6 +500,7 @@ module.exports = {
     await queryInterface.dropTable(ROLE_TABLE);
     await queryInterface.dropTable(LOCATION_TABLE);
 
+    await queryInterface.dropTable(PAYMENT_METHODS_TABLE);
     await queryInterface.dropTable(CATEGORY_EXTRA_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_EXTRA_TABLE);
@@ -512,7 +515,5 @@ module.exports = {
     await queryInterface.dropTable(STORE_TABLE);
     await queryInterface.dropTable(OWNER_TABLE);
     await queryInterface.dropTable(USER_TABLE);
-
-
   },
 };

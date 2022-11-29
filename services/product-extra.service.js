@@ -69,6 +69,7 @@ class ProductsExtraService {
     const category = await serviceCategoryExtra.findOne(newProduct.categoryExtraId);
     
     var payload = { productExtraId: newProduct.id, status: true };
+    
     const stores = await storeService.find(category.ownerId);
     for (const store of stores.values()) {  
       payload.storeId= store.id;
