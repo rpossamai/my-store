@@ -49,7 +49,17 @@ class LocationService {
     };
   }
 
+  async findOne(id) {
+    const location = await models.Location.findByPk(id);
+    if (!location) {
+      throw boom.notFound('location not found');
+    }
+    return location;
+  }
+
   async delete(id) {
+    const location = await this.findOne(id);
+    await location.destroy();
     return { id };
   }
 

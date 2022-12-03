@@ -34,16 +34,18 @@ module.exports = {
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
     await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
+    await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
+    await queryInterface.createTable(PAYMENT_METHODS_TABLE, PaymentMethodSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
     await queryInterface.createTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE, OrderProductProductExtraSchema);
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
     await queryInterface.createTable(STORE_PRODUCT_EXTRA_TABLE, StoreProductExtraSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_PRODUCT_TABLE, CategoryExtraProductSchema);
-    await queryInterface.createTable(PAYMENT_METHODS_TABLE, PaymentMethodSchema);
+
 
     await queryInterface.createTable(ROLE_TABLE, RoleSchema);
-    await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
+
 
     
     const hash = await bcrypt.hash('987654321', 10);
@@ -498,15 +500,16 @@ module.exports = {
 
   async down(queryInterface) {
     await queryInterface.dropTable(ROLE_TABLE);
-    await queryInterface.dropTable(LOCATION_TABLE);
 
-    await queryInterface.dropTable(PAYMENT_METHODS_TABLE);
+
     await queryInterface.dropTable(CATEGORY_EXTRA_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
     await queryInterface.dropTable(ORDER_TABLE);
+    await queryInterface.dropTable(LOCATION_TABLE);
+    await queryInterface.dropTable(PAYMENT_METHODS_TABLE);
     await queryInterface.dropTable(PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(CATEGORY_EXTRA_TABLE);
     await queryInterface.dropTable(PRODUCT_TABLE);

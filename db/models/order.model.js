@@ -1,5 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { CUSTOMER_TABLE } = require('./customer.model');
+const { LOCATION_TABLE } = require('./location.model');
+const { PAYMENT_METHODS_TABLE } = require('./payment-method.model');
+const { STORE_TABLE } = require('./store.model');
 
 const ORDER_TABLE = 'orders';
 
@@ -16,6 +19,51 @@ const OrderSchema = {
     type: DataTypes.INTEGER,
     references: {
       model: CUSTOMER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  status: { //SUCCESSFUL ORDER, PAID, PREPARING, FINISHED, DELIVERED
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: false,
+  },
+  type: {//DELIVERY / PICKUP
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: false,
+  },
+  //si type=DELIVERY,el location es la direccion del cliente
+  //si type=PICKUP, el location es la direccion de la sucursal a donde se hizo el pedido
+  locationId: {
+    field: 'location_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: LOCATION_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  paymentMethodId: {
+    field: 'payment_method_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: PAYMENT_METHODS_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  storeId: {
+    field: 'store_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: STORE_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',
@@ -64,16 +112,22 @@ class Order extends Model {
     this.belongsTo(models.Customer, {
       as: 'customer',
     });
-    this.belongsToMany(models.Product, {
-      as: 'items',
-      through: models.OrderProduct,
-      foreignKey: 'orderId',
-      otherKey: 'productId'
+    this.belongsTo(models.Location, {
+      as: 'location',
+    });
+    this.belongsTo(models.PaymentMethod, {
+      as: 'paymentMethod',
     });
     this.hasMany(models.OrderProduct, {
       as: 'orderProducts',
       foreignKey: 'orderId'
     });
+    /*this.belongsToMany(models.Product, {
+      as: 'items',
+      through: models.OrderProduct,
+      foreignKey: 'orderId',
+      otherKey: 'productId'
+    });*/
   }
 
   static config(sequelize) {

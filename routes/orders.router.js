@@ -7,6 +7,22 @@ const { getOrderSchema, createOrderSchema, addItemSchema, addItemExtrasSchema, c
 const router = express.Router();
 const service = new OrderService();
 
+
+router.get(
+  '/stores/:id',
+  validatorHandler(getOrderSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const order = await service.findByStore(id);
+      res.json(order);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+
 router.get(
   '/:id',
   validatorHandler(getOrderSchema, 'params'),
@@ -40,10 +56,12 @@ router.post(
   validatorHandler(createOrderProductsSchema, 'body'),
   async (req, res, next) => {
     try {
-      var newItem = [];
-      const customerId = req.body.customerId;
       const products = req.body.products;
-      const newOrder = await service.create({'customerId':customerId});
+      const newOrder = await service.create({
+        'customerId':req.body.customerId, 'paymentMethodId':req.body.paymentMethodId,
+        'locationId':req.body.locationId,'storeId':req.body.storeId,
+        'status':req.body.status,'type':req.body.type
+      });
 
       for (const product of products.values()) {
         product ['orderId'] = newOrder.id;

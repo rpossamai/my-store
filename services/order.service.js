@@ -17,11 +17,6 @@ class OrderService {
     return newOrder;
   }
 
-  /*async addItem(data) {
-    const newItem = await models.OrderProduct.create(data);
-    return newItem;
-  }*/
-
   async addItem(data) { 
     const newItem = await models.OrderProduct.create(data);
 
@@ -32,21 +27,36 @@ class OrderService {
         extraPayload = {};
         extraPayload ['orderProductId'] = newItem.id;
         extraPayload ['productExtraId'] = extra.productExtraId
-        //extraPayload.productExtraId = extra.productExtraId;
-        //extrasList[i]=extraPayload;
         extrasList.push(extraPayload);
       }
       console.log('Extras:');
       console.log(extrasList);
       await models.OrderProductProductExtra.bulkCreate(extrasList, 
         { returning: true }) // will return all columns for each row inserted
-        .then((result) => {
-          //console.log(result);  
-        });
+      .then((result) => {/*console.log(result);*/});
         
-    }else{console.log('extrasList VACIA');}
+    }//else{console.log('extrasList VACIA');}
 
     return newItem;
+  }
+
+  async findByStore(storeId) {
+    const orders = await models.Order.findAll({
+      where: { storeId },
+      include: [
+        {
+          association: 'customer',
+          attributes: {exclude: ['photo']},
+          include: [{association: 'user',
+          attributes: {exclude: ['password','recoveryToken']}}]
+        },'location','paymentMethod',
+        {
+          association: 'orderProducts',
+          include: ['product','extras']   
+        }  
+      ]
+    });
+    return orders;
   }
 
   async findByUser(userId) {
@@ -60,7 +70,7 @@ class OrderService {
           attributes: {exclude: ['photo']},
           include: [{association: 'user',
           attributes: {exclude: ['password','recoveryToken']}}]
-        },//,'items'
+        },'location','paymentMethod',//,'items'
         {
           association: 'orderProducts',
           include: ['product','extras']   
@@ -78,7 +88,7 @@ class OrderService {
           attributes: {exclude: ['photo']},
           include: [{association: 'user',
           attributes: {exclude: ['password','recoveryToken']}}]
-        },//{ association: 'items' },
+        },'location','paymentMethod',//{ association: 'items' },
         {
           association: 'orderProducts',
           include: ['product','extras']   
