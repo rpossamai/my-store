@@ -1,6 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const { OWNER_TABLE } = require('./owner.model');
+const { LOCATION_TABLE } = require('./location.model');
 
 const STORE_TABLE = 'stores';
 
@@ -41,6 +42,17 @@ const StoreSchema =  {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  locationId: {
+    field: 'location_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: LOCATION_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
@@ -57,6 +69,9 @@ class Store extends Model {
     this.hasMany(models.PaymentMethod, {
       as: 'paymentMethods',
       foreignKey: 'storeId'
+    });
+    this.belongsTo(models.Location, {
+      as: 'location',
     });
   }
 

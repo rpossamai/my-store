@@ -46,7 +46,7 @@ const LocationSchema = {
     type: DataTypes.STRING,
     unique: false,
   }, 
-  type: {
+  type: {//WORK, HOME, OTHER
     allowNull: false,
     type: DataTypes.STRING,
     unique: false,
@@ -59,7 +59,7 @@ const LocationSchema = {
   },
   userId: {
     field: 'user_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     unique: false,
     references: {
@@ -74,6 +74,10 @@ const LocationSchema = {
 class Location extends Model {
   static associate(models) {
     this.belongsTo(models.User, {as: 'user'});
+    this.hasOne(models.Store, {
+      as: 'location',
+      foreignKey: 'locationId'
+    });
   }
 
   static config(sequelize) {

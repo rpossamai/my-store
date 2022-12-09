@@ -19,7 +19,6 @@ const { PaymentMethod, PaymentMethodSchema } = require('./payment-method.model')
 function setupModels(sequelize) {
   Owner.init(OwnerSchema, Owner.config(sequelize));
   Store.init(StoreSchema, Store.config(sequelize));
-
   User.init(UserSchema, User.config(sequelize));
   Customer.init(CustomerSchema, Customer.config(sequelize));
   Category.init(CategorySchema, Category.config(sequelize));
@@ -48,9 +47,8 @@ function setupModels(sequelize) {
   OrderProduct.associate(sequelize.models);
   Location.associate(sequelize.models);
   PaymentMethod.associate(sequelize.models);
-
   //Role.associate(sequelize.models);
-  //Store.associate(sequelize.models);
+
 }
 
 module.exports = setupModels;

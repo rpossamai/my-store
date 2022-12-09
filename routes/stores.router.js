@@ -4,12 +4,46 @@ const StoreService = require('../services/store.service');
 const PaymentMethodService = require('../services/payment-method.service');
 
 const validatorHandler = require('../middlewares/validator.handler');
-const { createPaymentMethodSchema, updatePaymentMethodSchema, getPaymentMethodSchema, getPaymentMethodStoreSchema } = require('../schemas/store.schema');
+const { 
+  createPaymentMethodSchema, updatePaymentMethodSchema, 
+  getPaymentMethodSchema, getPaymentMethodStoreSchema, 
+  getStoresByDistanceSchema, getStoresSchema
+} = require('../schemas/store.schema');
 
 const router = express.Router();
 
 const service = new StoreService();
 const servicePaymentMethod = new PaymentMethodService();
+
+router.get('/owners/:id/',
+  validatorHandler(getStoresSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const stores = await service.find(id);
+      res.json(stores);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//Consulta las tiendas ordenadas ascendentemente 
+//por la distancia que se encuentra de la ubicacion del cliente 
+router.post('/owners/:id/stores-by-distances',
+  validatorHandler(getStoresSchema, 'params'),
+  validatorHandler(getStoresByDistanceSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { latitude, longitude, radiusKm } = req.body;
+      const stores = await service.findOrderedByDistance(id, latitude, longitude, radiusKm);
+      res.json(stores);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 router.get('/:id/payment-methods',
   validatorHandler(getPaymentMethodStoreSchema, 'params'),

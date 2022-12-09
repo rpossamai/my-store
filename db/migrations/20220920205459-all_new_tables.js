@@ -28,13 +28,13 @@ module.exports = {
   async up(queryInterface) {
     await queryInterface.createTable(USER_TABLE, UserSchema);
     await queryInterface.createTable(OWNER_TABLE, OwnerSchema);
+    await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
     await queryInterface.createTable(STORE_TABLE, StoreSchema);
     await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema);
     await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
     await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
-    await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
     await queryInterface.createTable(PAYMENT_METHODS_TABLE, PaymentMethodSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
@@ -42,7 +42,6 @@ module.exports = {
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
     await queryInterface.createTable(STORE_PRODUCT_EXTRA_TABLE, StoreProductExtraSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_PRODUCT_TABLE, CategoryExtraProductSchema);
-
 
     await queryInterface.createTable(ROLE_TABLE, RoleSchema);
 
@@ -74,12 +73,89 @@ module.exports = {
         created_at: new Date(),
       },
     ]);
+
+    await queryInterface.bulkInsert(LOCATION_TABLE, [
+      {
+        address: 'LOS RUICES, CARACAS',
+        number:'1',
+        city:'caracas',
+        state:'miranda',
+        reference: 'tiendas que estan localizadas en caracas',
+        latitude: '10.485800263095387',
+        longitude: '-66.82704617224805',
+        type: 'OWNER',
+        //user_id: 2,
+        created_at: new Date()
+      },
+      {
+        address: 'ALTOS_MIRANDINOS',
+        number:'1',
+        city:'san antonio de los altos',
+        state:'miranda',
+        reference: 'tiendas que estan localizadas en los altos mirandinos',
+        latitude: '10.374521234080254',
+        longitude: '-66.961879134132',
+        type: 'OWNER',
+        //user_id: 2,
+        created_at: new Date()
+      },
+      {
+        address: 'CHACAITO, CARACAS',
+        number:'1',
+        city:'caracas',
+        state:'miranda',
+        reference: 'tiendas que estan localizadas en chacaito caracas',
+        latitude: '10.49233692764429',
+        longitude: '-66.8689704706378',
+        type: 'OWNER',
+        //user_id: 2,
+        created_at: new Date() 
+      },
+      {
+        address: 'GUATIRE',
+        number:'1',
+        city:'guatire',
+        state:'miranda',
+        reference: 'tienda que esta localizada en buenaventura',
+        latitude: '10.470906824646361',
+        longitude: '-66.54733790939409', 
+        type: 'OWNER',
+        //user_id: 2,
+        created_at: new Date()
+      },
+    ]);
+
     await queryInterface.bulkInsert(STORE_TABLE, [
       {
         social_id: 1,
         social_name: 'ALQUADRADO PIZZA LOS RUICES',
         owner_id: 1,
         phone: 123456789,
+        location_id: 1,
+        created_at: new Date(),
+      },
+      {
+        social_id: 2,
+        social_name: 'ALQUADRADO PIZZA LOS ALTOS',
+        owner_id: 1,
+        phone: 123456789,
+        location_id: 2,
+        created_at: new Date(),
+      },
+      {
+        social_id: 2,
+        social_name: 'ALQUADRADO PIZZA GUATIRE-GUARENAS',
+        owner_id: 1,
+        phone: 123456789,
+        location_id: 4,
+        created_at: new Date(),
+      },
+      {
+        social_id: 2,
+        social_name: 'ALQUADRADO PIZZA CHACAITO',
+        owner_id: 1,
+        phone: 123456789,
+        location_id: 3,
         created_at: new Date(),
       },
     ]);
@@ -470,32 +546,6 @@ module.exports = {
       { product_id: 19,category_extra_id: 3,status:true,created_at: new Date() },
     ]);
 
-    await queryInterface.bulkInsert(LOCATION_TABLE, [
-      {
-        address: 'CARACAS',
-        number:'1',
-        city:'caracas',
-        state:'miranda',
-        reference: 'tiendas que estan localizadas en caracas',
-        latitude: '-66.921608',
-        longitude: '10.504851',
-        type: 'OWNER',
-        user_id: 2,
-        created_at: new Date()
-      },
-      {
-        address: 'ALTOS_MIRANDINOS',
-        number:'1',
-        city:'san antonio de los altos',
-        state:'miranda',
-        reference: 'tiendas que estan localizadas en los altos mirandinos',
-        latitude: '10.381363302434657',
-        longitude: '-66.96636946424778',
-        type: 'OWNER',
-        user_id: 2,
-        created_at: new Date()
-      }
-    ]);
   },
 
   async down(queryInterface) {
@@ -508,7 +558,7 @@ module.exports = {
     await queryInterface.dropTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
     await queryInterface.dropTable(ORDER_TABLE);
-    await queryInterface.dropTable(LOCATION_TABLE);
+
     await queryInterface.dropTable(PAYMENT_METHODS_TABLE);
     await queryInterface.dropTable(PRODUCT_EXTRA_TABLE);
     await queryInterface.dropTable(CATEGORY_EXTRA_TABLE);
@@ -516,6 +566,7 @@ module.exports = {
     await queryInterface.dropTable(CATEGORY_TABLE);
     await queryInterface.dropTable(CUSTOMER_TABLE);
     await queryInterface.dropTable(STORE_TABLE);
+    await queryInterface.dropTable(LOCATION_TABLE);
     await queryInterface.dropTable(OWNER_TABLE);
     await queryInterface.dropTable(USER_TABLE);
   },

@@ -24,7 +24,7 @@ const createLocationSchema = Joi.object({
   longitude : longitude.required(),
   latitude : latitude.required(),
   type : type.required(),
-  userId : userId.required(),
+  userId : userId.optional(),
 });
 
 const updateLocationSchema = Joi.object({
