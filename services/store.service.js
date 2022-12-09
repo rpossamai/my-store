@@ -60,18 +60,17 @@ class StoreService {
       }else{
         //Devolverle un elemento con tienda mas cercana pero fuera del radio establecido  
         if(metrics.distanceKm < nearestDistanceKm){
+          storeAux.metrics ['status'] = -1;
+          storeAux.metrics ['message'] = 'ADDRESS OUTSIDE OF RADIUS. YOU GET THE NEAREST STORE.';
           nearestDistanceKm=metrics.distanceKm;
           nearestStore=storeAux;
         }
       }      
     }
-
     //Funcion flecha que ordena las tienda segun distancia mas cercana al cliente
     storesList.sort((a,b)=>a.metrics.distanceKm - b.metrics.distanceKm);
 
     if(storesList.length==0){
-      nearestStore.metrics ['status'] = -1;
-      nearestStore.metrics ['message'] = 'ADDRESS OUTSIDE OF RADIUS. YOU GET THE NEAREST STORE.';
       storesList.push(nearestStore);   
     }
 
