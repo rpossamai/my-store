@@ -15,7 +15,6 @@ class AuthService {
 
   async getUser(username, password) {
     var user;
-
     if (username.indexOf('@') == -1) {
       const customer = await customerService.findByPhone(username);
       if (!customer) {

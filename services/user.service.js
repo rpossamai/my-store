@@ -36,6 +36,22 @@ class UserService {
     return newUser;
   }
 
+  async createUserSeller(data) {
+    const hash = await bcrypt.hash(data.password, 10);
+    const newData = {
+      ...data,
+      password: hash,
+      seller: {
+        ...data.seller
+      }
+    }
+    const newUser = await models.User.create(newData, {
+      include: ['seller']
+    });
+    delete newUser.dataValues.password;
+    return newUser;
+  }
+
   async find() {
     const users = await models.User.findAll({
       //include: ['customer']
@@ -45,7 +61,11 @@ class UserService {
 
   async findByEmail(email) {
     const rta = await models.User.findOne({
-      where: { email }
+      where: { email },
+      include: [ {
+        association: 'seller',
+        include: ['store'] },
+      ]
     });
     return rta;
   }

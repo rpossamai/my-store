@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 
 const { UserSchema, USER_TABLE } = require('./../models/user.model');
 const { CustomerSchema, CUSTOMER_TABLE } = require('./../models/customer.model');
+const { SellerSchema, SELLER_TABLE } = require('./../models/seller.model');
 const { CategorySchema, CATEGORY_TABLE } = require('./../models/category.model');
 const { ProductSchema, PRODUCT_TABLE } = require('./../models/product.model');
 const { CategoryExtraSchema, CATEGORY_EXTRA_TABLE } = require('../models/category-extra.model');
@@ -31,6 +32,7 @@ module.exports = {
     await queryInterface.createTable(LOCATION_TABLE, LocationSchema);
     await queryInterface.createTable(STORE_TABLE, StoreSchema);
     await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema);
+    await queryInterface.createTable(SELLER_TABLE, SellerSchema);
     await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
@@ -50,24 +52,27 @@ module.exports = {
     const hash = await bcrypt.hash('987654321', 10);
     await queryInterface.bulkInsert(USER_TABLE, [
       {
-        //id: 1,
         email: 'admin@gmail.com',
         password: hash,
         role: 'ADMIN',
         created_at: new Date(),
       },
       {
-        //id: 2,
         email: 'alquadrado.pizza@gmail.com',
         password: hash,
         role: 'OWNER',
+        created_at: new Date(),
+      },
+      {
+        email: 'losruices.alquadrado.pizza@gmail.com',
+        password: hash,
+        role: 'SELLER',
         created_at: new Date(),
       },
     ]);
 
     await queryInterface.bulkInsert(OWNER_TABLE, [
       {
-        //id: 1,
         name: 'ALQUADRADO PIZZA',
         user_id: 2,
         created_at: new Date(),
@@ -156,6 +161,15 @@ module.exports = {
         owner_id: 1,
         phone: 123456789,
         location_id: 3,
+        created_at: new Date(),
+      },
+    ]);
+
+    await queryInterface.bulkInsert(SELLER_TABLE, [
+      {
+        name: 'los Ruices 1',
+        store_id: 1,
+        user_id: 3,
         created_at: new Date(),
       },
     ]);
@@ -564,6 +578,7 @@ module.exports = {
     await queryInterface.dropTable(CATEGORY_EXTRA_TABLE);
     await queryInterface.dropTable(PRODUCT_TABLE);
     await queryInterface.dropTable(CATEGORY_TABLE);
+    await queryInterface.dropTable(SELLER_TABLE);
     await queryInterface.dropTable(CUSTOMER_TABLE);
     await queryInterface.dropTable(STORE_TABLE);
     await queryInterface.dropTable(LOCATION_TABLE);
