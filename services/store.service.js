@@ -28,17 +28,29 @@ class StoreService {
     const stores = await models.Store.findAll({ where: { ownerId }, include: ['location'] });
     
     for (const store of stores.values()) {
+      const { Op } = require('sequelize');
+      var price=0;
       metrics = {};storeAux = {};
       //calculateDistance(lon1, lon2, lat1, lat2)//getDistanciaMetros(lat1,lon1,lat2,lon2)
       //distanceKm = await utils.calculateDistance(-66.84512522749166,store.location.longitude,10.482542288672368,store.location.latitude);
       distanceKm = await utils.getDistanciaMetros(
-        latitude,longitude,store.location.latitude, store.location.longitude)/1000;   
+        latitude,longitude,store.location.latitude, store.location.longitude)/1000;  
+      
+      //obtiene el precio de acuerdo a la distancia
+      const deliveryPrice = await models.DeliveryPrice.findOne({
+        where: { distanceMax: { [Op.gt]: distanceKm } } });//distanceMax > distanceKm 
+      
+      if(deliveryPrice){
+        price=deliveryPrice['price'];
+      }else{
+        price=20;
+      }
 
       metrics ['status'] = 1;
       metrics ['message'] = 'ADDRESS INSIDE OF RADIUS';
       metrics ['distanceKm'] = distanceKm;
       metrics ['waitTime'] = "30-40 min aprox"; //CALCULARRR XXXXX
-      metrics ['deliveryPrice'] = 1; //CALCULARRR XXXXX
+      metrics ['deliveryPrice'] = price;
 
       storeAux ['id'] = store.id;
       storeAux ['socialId'] = store.socialId;

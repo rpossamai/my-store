@@ -24,10 +24,11 @@ const OrderSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  status: { //SUCCESSFUL ORDER, PAID, PREPARING, FINISHED, DELIVERED
+  status: { //SUCCESSFUL, PAID, PROCESSING, FINISHED, DELIVERED
     allowNull: false,
     type: DataTypes.STRING,
     unique: false,
+    defaultValue: 'SUCCESSFUL'
   },
   type: {//DELIVERY / PICKUP
     allowNull: false,

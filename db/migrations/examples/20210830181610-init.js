@@ -29,7 +29,7 @@ module.exports = {
       role: {
         allowNull: false,
         type: Sequelize.DataTypes.STRING,
-        defaultValue: 'customer'
+        defaultValue: 'CUSTOMER'
       },
       createdAt: {
         allowNull: false,

@@ -4,8 +4,8 @@ const id = Joi.number().integer();
 const customerId = Joi.number().integer();
 const orderId = Joi.number().integer();
 const productId = Joi.number().integer();
-const status = Joi.string().default('SUCCESSFUL').default('PAID').default('PREPARING').default('FINISHED').default('DELIVERED');
-//SUCCESSFUL, PAID, PREPARING, FINISHED, DELIVERED
+const status = Joi.string().default('SUCCESSFUL').default('PAID').default('PROCESSING').default('FINISHED').default('DELIVERED');
+//SUCCESSFUL, PAID, PROCESSING, FINISHED, DELIVERED
 const type = Joi.string().default('DELIVERY').default('PICKUP');
 //DELIVERY / PICKUP
 const paymentMethodId = Joi.number().integer();

@@ -29,8 +29,8 @@ class OrderService {
         extraPayload ['productExtraId'] = extra.productExtraId
         extrasList.push(extraPayload);
       }
-      console.log('Extras:');
-      console.log(extrasList);
+      //console.log('Extras:');
+      //console.log(extrasList);
       await models.OrderProductProductExtra.bulkCreate(extrasList, 
         { returning: true }) // will return all columns for each row inserted
       .then((result) => {/*console.log(result);*/});

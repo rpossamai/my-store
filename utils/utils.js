@@ -28,6 +28,21 @@ class Utils {
     return d ; 
   }
 
+  //calcula el precio del delivery de acuerdo a la distancia entre el cliente y la sucursal
+  async calculateDeliveryPrice(distance,prices){
+      // distancia <= 5 then price=1;
+      // distance <= 10 then price=2
+  }
+
+  //calcula el tiempo de espera aprox para que una orden sea entregada
+  //parametro la cantidad de ordenes que fueron pagadas y/o estan siendo procesadas
+  async calculateWaitTime(ordersQty /*,distance*/ ){
+    //tiempo de preparacion de una orden
+    //cantidad de ordenes
+    //tiempo de recorrido??
+
+  }
+
 }
 
 module.exports = Utils;

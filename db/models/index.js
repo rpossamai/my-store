@@ -3,19 +3,38 @@ const { Customer, CustomerSchema } = require('./customer.model');
 const { Seller, SellerSchema } = require('./seller.model');
 const { Category, CategorySchema } = require('./category.model');
 const { Product, ProductSchema } = require('./product.model');
-const { CategoryExtra, CategoryExtraSchema } = require('./category-extra.model');
+const {
+  CategoryExtra,
+  CategoryExtraSchema,
+} = require('./category-extra.model');
 const { ProductExtra, ProductExtraSchema } = require('./product-extra.model');
 const { Order, OrderSchema } = require('./order.model');
 const { OrderProduct, OrderProductSchema } = require('./order-product.model');
-const { OrderProductProductExtra, OrderProductProductExtraSchema } = require('./order-product-product-extra.model');
+const {
+  OrderProductProductExtra,
+  OrderProductProductExtraSchema,
+} = require('./order-product-product-extra.model');
 const { Owner, OwnerSchema } = require('./owner.model');
 const { Store, StoreSchema } = require('./store.model');
 const { Role, RoleSchema } = require('./role.model');
 const { Location, LocationSchema } = require('./location.model');
 const { StoreProduct, StoreProductSchema } = require('./store-product.model');
-const { StoreProductExtra, StoreProductExtraSchema } = require('./store-product-extra.model');
-const { CategoryExtraProduct, CategoryExtraProductSchema } = require('./category-extra-product.model');
-const { PaymentMethod, PaymentMethodSchema } = require('./payment-method.model');
+const {
+  StoreProductExtra,
+  StoreProductExtraSchema,
+} = require('./store-product-extra.model');
+const {
+  CategoryExtraProduct,
+  CategoryExtraProductSchema,
+} = require('./category-extra-product.model');
+const {
+  PaymentMethod,
+  PaymentMethodSchema,
+} = require('./payment-method.model');
+const {
+  DeliveryPrice,
+  DeliveryPriceSchema,
+} = require('./delivery-price.model');
 
 function setupModels(sequelize) {
   Owner.init(OwnerSchema, Owner.config(sequelize));
@@ -36,6 +55,7 @@ function setupModels(sequelize) {
   Role.init(RoleSchema, Role.config(sequelize));
   Location.init(LocationSchema, Location.config(sequelize));
   PaymentMethod.init(PaymentMethodSchema, PaymentMethod.config(sequelize));
+  DeliveryPrice.init(DeliveryPriceSchema, DeliveryPrice.config(sequelize));
 
   User.associate(sequelize.models);
   Owner.associate(sequelize.models);
@@ -51,7 +71,6 @@ function setupModels(sequelize) {
   Location.associate(sequelize.models);
   PaymentMethod.associate(sequelize.models);
   //Role.associate(sequelize.models);
-
 }
 
 module.exports = setupModels;

@@ -3,24 +3,61 @@ const bcrypt = require('bcrypt');
 ('use strict');
 
 const { UserSchema, USER_TABLE } = require('./../models/user.model');
-const { CustomerSchema, CUSTOMER_TABLE } = require('./../models/customer.model');
+const {
+  CustomerSchema,
+  CUSTOMER_TABLE,
+} = require('./../models/customer.model');
 const { SellerSchema, SELLER_TABLE } = require('./../models/seller.model');
-const { CategorySchema, CATEGORY_TABLE } = require('./../models/category.model');
+const {
+  CategorySchema,
+  CATEGORY_TABLE,
+} = require('./../models/category.model');
 const { ProductSchema, PRODUCT_TABLE } = require('./../models/product.model');
-const { CategoryExtraSchema, CATEGORY_EXTRA_TABLE } = require('../models/category-extra.model');
-const { ProductExtraSchema, PRODUCT_EXTRA_TABLE } = require('../models/product-extra.model');
+const {
+  CategoryExtraSchema,
+  CATEGORY_EXTRA_TABLE,
+} = require('../models/category-extra.model');
+const {
+  ProductExtraSchema,
+  PRODUCT_EXTRA_TABLE,
+} = require('../models/product-extra.model');
 const { OrderSchema, ORDER_TABLE } = require('./../models/order.model');
-const { OrderProductSchema,  ORDER_PRODUCT_TABLE} = require('./../models/order-product.model');
-const { OrderProductProductExtraSchema,  ORDER_PRODUCT_PRODUCT_EXTRA_TABLE} = require('./../models/order-product-product-extra.model');
+const {
+  OrderProductSchema,
+  ORDER_PRODUCT_TABLE,
+} = require('./../models/order-product.model');
+const {
+  OrderProductProductExtraSchema,
+  ORDER_PRODUCT_PRODUCT_EXTRA_TABLE,
+} = require('./../models/order-product-product-extra.model');
 
 const { RoleSchema, ROLE_TABLE } = require('./../models/role.model');
-const { LocationSchema,  LOCATION_TABLE} = require('./../models/location.model');
+const {
+  LocationSchema,
+  LOCATION_TABLE,
+} = require('./../models/location.model');
 const { OwnerSchema, OWNER_TABLE } = require('./../models/owner.model');
 const { StoreSchema, STORE_TABLE } = require('./../models/store.model');
-const { StoreProductSchema,STORE_PRODUCT_TABLE} = require('./../models/store-product.model');
-const { StoreProductExtraSchema,STORE_PRODUCT_EXTRA_TABLE} = require('./../models/store-product-extra.model');
-const { CategoryExtraProductSchema, CATEGORY_EXTRA_PRODUCT_TABLE } = require('../models/category-extra-product.model');
-const { PaymentMethodSchema, PAYMENT_METHODS_TABLE } = require('./../models/payment-method.model');
+const {
+  StoreProductSchema,
+  STORE_PRODUCT_TABLE,
+} = require('./../models/store-product.model');
+const {
+  StoreProductExtraSchema,
+  STORE_PRODUCT_EXTRA_TABLE,
+} = require('./../models/store-product-extra.model');
+const {
+  CategoryExtraProductSchema,
+  CATEGORY_EXTRA_PRODUCT_TABLE,
+} = require('../models/category-extra-product.model');
+const {
+  PaymentMethodSchema,
+  PAYMENT_METHODS_TABLE,
+} = require('./../models/payment-method.model');
+const {
+  DeliveryPriceSchema,
+  DELIVERY_PRICE_TABLE,
+} = require('../models/delivery-price.model');
 
 //const InitialData = require('./../initial-data');
 //const initialData = new InitialData();
@@ -37,18 +74,28 @@ module.exports = {
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
     await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
-    await queryInterface.createTable(PAYMENT_METHODS_TABLE, PaymentMethodSchema);
+    await queryInterface.createTable(
+      PAYMENT_METHODS_TABLE,
+      PaymentMethodSchema
+    );
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
-    await queryInterface.createTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE, OrderProductProductExtraSchema);
+    await queryInterface.createTable(
+      ORDER_PRODUCT_PRODUCT_EXTRA_TABLE,
+      OrderProductProductExtraSchema
+    );
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
-    await queryInterface.createTable(STORE_PRODUCT_EXTRA_TABLE, StoreProductExtraSchema);
-    await queryInterface.createTable(CATEGORY_EXTRA_PRODUCT_TABLE, CategoryExtraProductSchema);
-
+    await queryInterface.createTable(
+      STORE_PRODUCT_EXTRA_TABLE,
+      StoreProductExtraSchema
+    );
+    await queryInterface.createTable(
+      CATEGORY_EXTRA_PRODUCT_TABLE,
+      CategoryExtraProductSchema
+    );
+    await queryInterface.createTable(DELIVERY_PRICE_TABLE, DeliveryPriceSchema);
     await queryInterface.createTable(ROLE_TABLE, RoleSchema);
 
-
-    
     const hash = await bcrypt.hash('987654321', 10);
     await queryInterface.bulkInsert(USER_TABLE, [
       {
@@ -82,51 +129,51 @@ module.exports = {
     await queryInterface.bulkInsert(LOCATION_TABLE, [
       {
         address: 'LOS RUICES, CARACAS',
-        number:'1',
-        city:'caracas',
-        state:'miranda',
+        number: '1',
+        city: 'caracas',
+        state: 'miranda',
         reference: 'tiendas que estan localizadas en caracas',
         latitude: '10.485800263095387',
         longitude: '-66.82704617224805',
         type: 'OWNER',
         //user_id: 2,
-        created_at: new Date()
+        created_at: new Date(),
       },
       {
         address: 'ALTOS_MIRANDINOS',
-        number:'1',
-        city:'san antonio de los altos',
-        state:'miranda',
+        number: '1',
+        city: 'san antonio de los altos',
+        state: 'miranda',
         reference: 'tiendas que estan localizadas en los altos mirandinos',
         latitude: '10.374521234080254',
         longitude: '-66.961879134132',
         type: 'OWNER',
         //user_id: 2,
-        created_at: new Date()
+        created_at: new Date(),
       },
       {
         address: 'CHACAITO, CARACAS',
-        number:'1',
-        city:'caracas',
-        state:'miranda',
+        number: '1',
+        city: 'caracas',
+        state: 'miranda',
         reference: 'tiendas que estan localizadas en chacaito caracas',
         latitude: '10.49233692764429',
         longitude: '-66.8689704706378',
         type: 'OWNER',
         //user_id: 2,
-        created_at: new Date() 
+        created_at: new Date(),
       },
       {
         address: 'GUATIRE',
-        number:'1',
-        city:'guatire',
-        state:'miranda',
+        number: '1',
+        city: 'guatire',
+        state: 'miranda',
         reference: 'tienda que esta localizada en buenaventura',
         latitude: '10.470906824646361',
-        longitude: '-66.54733790939409', 
+        longitude: '-66.54733790939409',
         type: 'OWNER',
         //user_id: 2,
-        created_at: new Date()
+        created_at: new Date(),
       },
     ]);
 
@@ -204,14 +251,15 @@ module.exports = {
         image: '',
         owner_id: 1,
         created_at: new Date(),
-      }
+      },
     ]);
 
     await queryInterface.bulkInsert(PRODUCT_TABLE, [
       {
         name: 'Pepperoni Cheese Rolls',
         price: 6,
-        description: '6 enrrollados de pepperoni + queso ozarella perfectamente horneados + salsa alquadrado para untar.',
+        description:
+          '6 enrrollados de pepperoni + queso ozarella perfectamente horneados + salsa alquadrado para untar.',
         image: 'https://i.imgur.com/Fzaz6Rw.png',
         category_id: 2,
         created_at: new Date(),
@@ -243,7 +291,8 @@ module.exports = {
       {
         name: 'Chistobites',
         price: 7,
-        description: 'Delicioasos Bites rellenos de chistorra y queso crema con toppiong de mantequilla de ajo y ajonjoli. (incluye salsa de la casa para untar).',
+        description:
+          'Delicioasos Bites rellenos de chistorra y queso crema con toppiong de mantequilla de ajo y ajonjoli. (incluye salsa de la casa para untar).',
         image: 'https://i.imgur.com/8q0PGYJ.png',
         category_id: 2,
         created_at: new Date(),
@@ -288,7 +337,7 @@ module.exports = {
         category_id: 3,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Pizza 4 Estaciones',
         price: 12,
         description: 'Queso mozarella, salsa Napole y 4 Estaciones',
@@ -296,7 +345,7 @@ module.exports = {
         category_id: 3,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Pizza Primavera',
         price: 12,
         description: 'Queso mozarella, salsa Napole y 4 Estaciones',
@@ -304,7 +353,7 @@ module.exports = {
         category_id: 3,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Pizza Pepperoni',
         price: 12,
         description: 'Queso mozarella, salsa Napole',
@@ -312,7 +361,7 @@ module.exports = {
         category_id: 3,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Pizza Vegetariana',
         price: 12,
         description: 'Queso mozarella, salsa Napole',
@@ -320,7 +369,7 @@ module.exports = {
         category_id: 3,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Pizza Tocineitor',
         price: 14,
         description: 'Queso mozarella, salsa Napole',
@@ -328,7 +377,7 @@ module.exports = {
         category_id: 4,
         created_at: new Date(),
       },
-	  	{
+      {
         name: 'Pizza Al Quadrado Especial',
         price: 14,
         description: 'Queso mozarella, salsa Napole',
@@ -336,7 +385,7 @@ module.exports = {
         category_id: 4,
         created_at: new Date(),
       },
-	  	{
+      {
         name: 'Pizza Montserratina',
         price: 14,
         description: 'Queso mozarella, salsa Napole',
@@ -344,7 +393,7 @@ module.exports = {
         category_id: 4,
         created_at: new Date(),
       },
-	  	{
+      {
         name: 'Pizza Vegetariana Doble',
         price: 14,
         description: 'Queso mozarella, salsa Napole',
@@ -352,7 +401,7 @@ module.exports = {
         category_id: 4,
         created_at: new Date(),
       },
-	  	{
+      {
         name: 'Pizza Triple Pepperoni',
         price: 15,
         description: 'Queso mozarella, salsa Napole',
@@ -360,7 +409,7 @@ module.exports = {
         category_id: 4,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Galleta Extra Grande Marmoleada',
         price: 3,
         description: 'Galleta Extra Grande Marmoleada.',
@@ -368,17 +417,17 @@ module.exports = {
         category_id: 5,
         created_at: new Date(),
       },
-	    {
+      {
         name: 'Galleta Extra Grande Chocolate',
         price: 3,
         description: 'Galleta Extra Grande Chocolate.',
         image: 'https://i.imgur.com/rUjIzLw.png',
         category_id: 5,
         created_at: new Date(),
-      }
+      },
     ]);
 
-    await queryInterface.bulkInsert(CATEGORY_EXTRA_TABLE, [  
+    await queryInterface.bulkInsert(CATEGORY_EXTRA_TABLE, [
       {
         name: 'Elige Tu Extra',
         image: '',
@@ -396,7 +445,7 @@ module.exports = {
         image: '',
         owner_id: 1,
         created_at: new Date(),
-      }
+      },
     ]);
 
     await queryInterface.bulkInsert(PRODUCT_EXTRA_TABLE, [
@@ -471,7 +520,7 @@ module.exports = {
         image: '',
         category_extra_id: 3,
         created_at: new Date(),
-      }
+      },
     ]);
 
     await queryInterface.bulkInsert(ROLE_TABLE, [
@@ -483,88 +532,370 @@ module.exports = {
     ]);
 
     await queryInterface.bulkInsert(STORE_PRODUCT_TABLE, [
-      { product_id: 1,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 2,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 3,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 4,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 5,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 6,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 7,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 8,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 9,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 10,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 11,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 12,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 13,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 14,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 15,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 16,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 17,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 18,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 19,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 20,store_id: 1,status:true,created_at: new Date() },
-      { product_id: 21,store_id: 1,status:true,created_at: new Date() },
+      { product_id: 1, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 2, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 3, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 4, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 5, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 6, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 7, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 8, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 9, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 10, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 11, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 12, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 13, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 14, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 15, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 16, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 17, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 18, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 19, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 20, store_id: 1, status: true, created_at: new Date() },
+      { product_id: 21, store_id: 1, status: true, created_at: new Date() },
     ]);
 
     await queryInterface.bulkInsert(STORE_PRODUCT_EXTRA_TABLE, [
-      { product_extra_id: 1,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 2,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 3,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 4,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 5,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 6,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 7,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 8,store_id: 1,status:true,created_at: new Date() },
-      { product_extra_id: 9,store_id: 1,status:true,created_at: new Date() },
+      {
+        product_extra_id: 1,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 2,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 3,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 4,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 5,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 6,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 7,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 8,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_extra_id: 9,
+        store_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
     ]);
 
     await queryInterface.bulkInsert(CATEGORY_EXTRA_PRODUCT_TABLE, [
-      { product_id: 7,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 7,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 7,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 8,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 8,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 8,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 9,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 9,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 9,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 10,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 10,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 10,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 11,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 11,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 11,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 12,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 12,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 12,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 13,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 13,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 13,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 14,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 14,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 14,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 15,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 15,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 15,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 16,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 16,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 16,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 17,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 17,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 17,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 18,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 18,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 18,category_extra_id: 3,status:true,created_at: new Date() },
-      { product_id: 19,category_extra_id: 1,status:true,created_at: new Date() },
-      { product_id: 19,category_extra_id: 2,status:true,created_at: new Date() },
-      { product_id: 19,category_extra_id: 3,status:true,created_at: new Date() },
+      {
+        product_id: 7,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 7,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 7,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 8,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 8,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 8,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 9,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 9,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 9,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 10,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 10,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 10,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 11,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 11,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 11,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 12,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 12,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 12,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 13,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 13,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 13,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 14,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 14,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 14,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 15,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 15,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 15,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 16,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 16,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 16,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 17,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 17,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 17,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 18,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 18,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 18,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 19,
+        category_extra_id: 1,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 19,
+        category_extra_id: 2,
+        status: true,
+        created_at: new Date(),
+      },
+      {
+        product_id: 19,
+        category_extra_id: 3,
+        status: true,
+        created_at: new Date(),
+      },
     ]);
 
+    await queryInterface.bulkInsert(DELIVERY_PRICE_TABLE, [
+      {
+        distance_max: 2,
+        price: 1,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 4,
+        price: 1.50,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 6,
+        price: 2,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 8,
+        price: 2.5,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 10,
+        price: 3,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 12,
+        price: 3.5,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 14,
+        price: 4,
+        created_at: new Date(),
+      },
+      {
+        distance_max: 16,
+        price: 4.5,
+        created_at: new Date(),
+      },
+    ]);
   },
 
   async down(queryInterface) {
     await queryInterface.dropTable(ROLE_TABLE);
-
+    await queryInterface.dropTable(DELIVERY_PRICE_TABLE);
 
     await queryInterface.dropTable(CATEGORY_EXTRA_PRODUCT_TABLE);
     await queryInterface.dropTable(STORE_PRODUCT_TABLE);
