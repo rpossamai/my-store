@@ -8,9 +8,12 @@ class CustomerService {
 
   async find() {
     const rta = await models.Customer.findAll({
-      include: [{
+      include: [
+        {
           association: 'user',attributes: {exclude: ['password','recoveryToken']}
-      }],attributes: {exclude: ['photo']}     
+        }
+      ],
+      attributes: {exclude: ['photo']}     
     });
  
     return rta;

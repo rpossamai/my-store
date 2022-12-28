@@ -3,61 +3,25 @@ const bcrypt = require('bcrypt');
 ('use strict');
 
 const { UserSchema, USER_TABLE } = require('./../models/user.model');
-const {
-  CustomerSchema,
-  CUSTOMER_TABLE,
-} = require('./../models/customer.model');
+const { CustomerSchema, CUSTOMER_TABLE} = require('./../models/customer.model');
 const { SellerSchema, SELLER_TABLE } = require('./../models/seller.model');
-const {
-  CategorySchema,
-  CATEGORY_TABLE,
-} = require('./../models/category.model');
+const { CategorySchema, CATEGORY_TABLE } = require('./../models/category.model');
 const { ProductSchema, PRODUCT_TABLE } = require('./../models/product.model');
-const {
-  CategoryExtraSchema,
-  CATEGORY_EXTRA_TABLE,
-} = require('../models/category-extra.model');
-const {
-  ProductExtraSchema,
-  PRODUCT_EXTRA_TABLE,
-} = require('../models/product-extra.model');
+const { CategoryExtraSchema, CATEGORY_EXTRA_TABLE } = require('../models/category-extra.model');
+const { ProductExtraSchema, PRODUCT_EXTRA_TABLE } = require('../models/product-extra.model');
 const { OrderSchema, ORDER_TABLE } = require('./../models/order.model');
-const {
-  OrderProductSchema,
-  ORDER_PRODUCT_TABLE,
-} = require('./../models/order-product.model');
-const {
-  OrderProductProductExtraSchema,
-  ORDER_PRODUCT_PRODUCT_EXTRA_TABLE,
-} = require('./../models/order-product-product-extra.model');
+const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('./../models/order-product.model');
+const { OrderProductProductExtraSchema, ORDER_PRODUCT_PRODUCT_EXTRA_TABLE } = require('./../models/order-product-product-extra.model');
 
 const { RoleSchema, ROLE_TABLE } = require('./../models/role.model');
-const {
-  LocationSchema,
-  LOCATION_TABLE,
-} = require('./../models/location.model');
+const { LocationSchema, LOCATION_TABLE } = require('./../models/location.model');
 const { OwnerSchema, OWNER_TABLE } = require('./../models/owner.model');
 const { StoreSchema, STORE_TABLE } = require('./../models/store.model');
-const {
-  StoreProductSchema,
-  STORE_PRODUCT_TABLE,
-} = require('./../models/store-product.model');
-const {
-  StoreProductExtraSchema,
-  STORE_PRODUCT_EXTRA_TABLE,
-} = require('./../models/store-product-extra.model');
-const {
-  CategoryExtraProductSchema,
-  CATEGORY_EXTRA_PRODUCT_TABLE,
-} = require('../models/category-extra-product.model');
-const {
-  PaymentMethodSchema,
-  PAYMENT_METHODS_TABLE,
-} = require('./../models/payment-method.model');
-const {
-  DeliveryPriceSchema,
-  DELIVERY_PRICE_TABLE,
-} = require('../models/delivery-price.model');
+const { StoreProductSchema, STORE_PRODUCT_TABLE } = require('./../models/store-product.model');
+const { StoreProductExtraSchema, STORE_PRODUCT_EXTRA_TABLE } = require('./../models/store-product-extra.model');
+const { CategoryExtraProductSchema, CATEGORY_EXTRA_PRODUCT_TABLE } = require('../models/category-extra-product.model');
+const { PaymentMethodSchema, PAYMENT_METHODS_TABLE } = require('./../models/payment-method.model');
+const { DeliveryPriceSchema, DELIVERY_PRICE_TABLE } = require('../models/delivery-price.model');
 
 //const InitialData = require('./../initial-data');
 //const initialData = new InitialData();
@@ -74,10 +38,7 @@ module.exports = {
     await queryInterface.createTable(PRODUCT_TABLE, ProductSchema);
     await queryInterface.createTable(CATEGORY_EXTRA_TABLE, CategoryExtraSchema);
     await queryInterface.createTable(PRODUCT_EXTRA_TABLE, ProductExtraSchema);
-    await queryInterface.createTable(
-      PAYMENT_METHODS_TABLE,
-      PaymentMethodSchema
-    );
+    await queryInterface.createTable(PAYMENT_METHODS_TABLE,PaymentMethodSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
     await queryInterface.createTable(
@@ -212,6 +173,49 @@ module.exports = {
       },
     ]);
 
+    await queryInterface.bulkInsert(PAYMENT_METHODS_TABLE, [
+      {
+        name: 'Efectivo',
+        description: '',
+        icon: 'cash',
+        status: 'true',
+        created_at: new Date(),
+        store_id: 1
+      },
+      {
+        name: 'Pago Movil',
+        description: '',
+        icon: 'phone-portrait',
+        status: 'true',
+        created_at: new Date(),
+        store_id: 1
+      },
+      {
+        name: 'Transferencia',
+        description: '',
+        icon: 'card',
+        status: 'true',
+        created_at: new Date(),
+        store_id: 1
+      },
+      {
+        name: 'Zelle',
+        description: 'correo:alquadrado@gmail.com, nombre:alquadrado',
+        icon: '../../../assets/icons/zelle.png',
+        status: 'true',
+        created_at: new Date(),
+        store_id: 1
+      },
+      {
+        name: 'Zinli',
+        description: 'correo:alquadrado@gmail.com, nombre:alquadrado',
+        icon: '../../../assets/icons/zinli.png',
+        status: 'true',
+        created_at: new Date(),
+        store_id: 1
+      }
+    ]);
+
     await queryInterface.bulkInsert(SELLER_TABLE, [
       {
         name: 'los Ruices 1',
@@ -322,7 +326,7 @@ module.exports = {
         created_at: new Date(),
       },
       {
-        name: 'Salchicha Italiana',
+        name: 'Pizza Salchicha Italiana',
         price: 12,
         description: 'Queso mozarella, salsa Napole y full Salchicha Italiana',
         image: 'https://i.imgur.com/UByzcBJ.png',

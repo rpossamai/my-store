@@ -9,13 +9,14 @@ class OrderService {
 
   async create(data) {
     const newOrder = await models.Order.create(data);
+    delete newOrder.dataValues.image;
     return newOrder;
   }
 
-  async createOrderProducts(data) {
+  /*async createOrderProducts(data) {
     const newOrder = await models.Order.create(data);
     return newOrder;
-  }
+  }*/
 
   async addItem(data) { 
     const newItem = await models.OrderProduct.create(data);
@@ -54,7 +55,7 @@ class OrderService {
           association: 'orderProducts',
           include: ['product','extras']   
         }  
-      ]
+      ],attributes:{exclude: ['image']}
     });
     return orders;
   }
@@ -64,8 +65,8 @@ class OrderService {
       where: {
         '$customer.user.id$': userId
       },
-      include: [
-        {
+      include: [ 
+        { 
           association: 'customer',
           attributes: {exclude: ['photo']},
           include: [{association: 'user',
@@ -74,8 +75,8 @@ class OrderService {
         {
           association: 'orderProducts',
           include: ['product','extras']   
-        }  
-      ]
+        }
+      ],attributes:{exclude: ['image']}
     });
     return orders;
   }
@@ -93,7 +94,7 @@ class OrderService {
           association: 'orderProducts',
           include: ['product','extras']   
         }    
-      ]
+      ]//,attributes:{exclude: ['image']}
     });
     return order;
   }

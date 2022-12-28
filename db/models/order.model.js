@@ -5,7 +5,7 @@ const { PAYMENT_METHODS_TABLE } = require('./payment-method.model');
 const { STORE_TABLE } = require('./store.model');
 
 const ORDER_TABLE = 'orders';
-
+ 
 const OrderSchema = {
   id: {
     allowNull: false,
@@ -70,6 +70,10 @@ const OrderSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
+  image: {
+    type: DataTypes.BLOB,
+    allowNull: true,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -93,11 +97,11 @@ const OrderSchema = {
             
             orderProduct.extras.reduce((totalExtra, extra) => {
               total= total + (extra.price * orderProduct.amount);
-              console.log('total+Extra:'+total);
+              //console.log('total+Extra:'+total);
               return totalExtra;
             }, 0);
 
-            console.log('total:'+total);
+            //console.log('total:'+total);
             return total;
           }, 0);
         }

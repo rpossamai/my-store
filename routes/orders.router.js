@@ -60,7 +60,8 @@ router.post(
       const newOrder = await service.create({
         'customerId':req.body.customerId, 'paymentMethodId':req.body.paymentMethodId,
         'locationId':req.body.locationId,'storeId':req.body.storeId,
-        'status':req.body.status,'type':req.body.type
+        'status':req.body.status,'type':req.body.type,
+        'image':req.body.image
       });
 
       for (const product of products.values()) {
@@ -68,6 +69,7 @@ router.post(
         newItem = await service.addItem(product);
       }
       const order = await service.findOne(newOrder.id);
+      delete order.dataValues.image;
       res.status(201).json(order);
     } catch (error) {
       next(error);

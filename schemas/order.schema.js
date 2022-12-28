@@ -4,13 +4,14 @@ const id = Joi.number().integer();
 const customerId = Joi.number().integer();
 const orderId = Joi.number().integer();
 const productId = Joi.number().integer();
-const status = Joi.string().default('SUCCESSFUL').default('PAID').default('PROCESSING').default('FINISHED').default('DELIVERED');
 //SUCCESSFUL, PAID, PROCESSING, FINISHED, DELIVERED
-const type = Joi.string().default('DELIVERY').default('PICKUP');
+const status = Joi.string().default('SUCCESSFUL').default('PAID').default('PROCESSING').default('FINISHED').default('DELIVERED');
 //DELIVERY / PICKUP
+const type = Joi.string().default('DELIVERY').default('PICKUP');
 const paymentMethodId = Joi.number().integer();
 const locationId = Joi.number().integer();
 const storeId = Joi.number().integer();
+const image =  Joi.string();
 
 const amount = Joi.number().integer().min(1);
 const productExtraId = Joi.number().integer();
@@ -52,6 +53,7 @@ const createOrderProductsSchema = Joi.object({
   storeId: storeId.required(),
   status: status.required(),
   type: type.required(),
+  image: type.optional(),
   products: products.required()
 });
 
