@@ -1,5 +1,7 @@
 const boom = require('@hapi/boom');
 
+const { Op } = require('sequelize');
+var moment = require('moment');
 const { models } = require('./../libs/sequelize');
 
 class OrderService {
@@ -60,7 +62,7 @@ class OrderService {
     return orders;
   }
 
-  async findByUser(userId) {
+  /*async findByUser(userId, query) {
     const orders = await models.Order.findAll({
       where: {
         '$customer.user.id$': userId
@@ -78,6 +80,41 @@ class OrderService {
         }
       ],attributes:{exclude: ['image']}
     });
+    return orders;
+  }*/
+
+
+  async findByUser(userId, query) {
+    const options = {
+      where: {
+        '$customer.user.id$': userId
+      },
+      include: [ 
+        { 
+          association: 'customer',
+          attributes: {exclude: ['photo']},
+          include: [{association: 'user',
+          attributes: {exclude: ['password','recoveryToken']}}]
+        },'location','paymentMethod',//,'items'
+        {
+          association: 'orderProducts',
+          include: ['product','extras']   
+        }
+      ],attributes:{exclude: ['image']}
+    };
+
+    const { status, createdAt } = query;
+
+    if (status) { options.where.status = status; }
+
+    if (createdAt) {
+      var initDate = moment(createdAt);//.subtract(4, 'hours');
+      var endDate = moment(initDate).add(1, 'months');
+      //console.log(initDate._d);      
+      options.where.createdAt = { [Op.between]: [initDate, endDate] };
+    }
+
+    const orders = await models.Order.findAll(options);
     return orders;
   }
 
