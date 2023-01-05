@@ -2,7 +2,8 @@ const express = require('express');
 
 const OrderService = require('../services/order.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { getOrderSchema, createOrderSchema, addItemSchema, addItemExtrasSchema, createOrderProductsSchema } = require('../schemas/order.schema');
+const { getOrderSchema, createOrderSchema, 
+  addItemExtrasSchema, createOrderProductsSchema, updatOrderSchema } = require('../schemas/order.schema');
 
 const router = express.Router();
 const service = new OrderService();
@@ -14,7 +15,7 @@ router.get(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const order = await service.findByStore(id);
+      const order = await service.findByStore(id, req.query);
       res.json(order);
     } catch (error) {
       next(error);
@@ -61,7 +62,8 @@ router.post(
         'customerId':req.body.customerId, 'paymentMethodId':req.body.paymentMethodId,
         'locationId':req.body.locationId,'storeId':req.body.storeId,
         'status':req.body.status,'type':req.body.type,
-        'image':req.body.image
+        'image':req.body.image,
+        'note':req.body.note
       });
 
       for (const product of products.values()) {
@@ -85,6 +87,21 @@ router.post(
       const body = req.body;
       const newItem = await service.addItem(body);
       res.status(201).json(newItem);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.patch('/:id',
+  validatorHandler(getOrderSchema, 'params'),
+  validatorHandler(updatOrderSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const body = req.body;
+      const order = await service.update(id, body);
+      res.json(order);
     } catch (error) {
       next(error);
     }

@@ -15,11 +15,6 @@ class OrderService {
     return newOrder;
   }
 
-  /*async createOrderProducts(data) {
-    const newOrder = await models.Order.create(data);
-    return newOrder;
-  }*/
-
   async addItem(data) { 
     const newItem = await models.OrderProduct.create(data);
 
@@ -43,46 +38,29 @@ class OrderService {
     return newItem;
   }
 
-  async findByStore(storeId) {
-    const orders = await models.Order.findAll({
-      where: { storeId },
-      include: [
-        {
-          association: 'customer',
-          attributes: {exclude: ['photo']},
-          include: [{association: 'user',
-          attributes: {exclude: ['password','recoveryToken']}}]
-        },'location','paymentMethod',
-        {
-          association: 'orderProducts',
-          include: ['product','extras']   
-        }  
-      ],attributes:{exclude: ['image']}
-    });
+  async findByStore(storeId, query) {
+    const options = {
+        where: { storeId },
+        include: [
+          {
+            association: 'customer',
+            attributes: {exclude: ['photo']},
+            include: [{association: 'user',
+            attributes: {exclude: ['password','recoveryToken']}}]
+          },'location','paymentMethod',
+          {
+            association: 'orderProducts',
+            include: ['product','extras']   
+          }  
+        ],attributes:{exclude: ['image']}
+    };
+
+    const { status } = query;
+    if (status) { options.where.status = status; }
+
+    const orders = await models.Order.findAll(options);
     return orders;
   }
-
-  /*async findByUser(userId, query) {
-    const orders = await models.Order.findAll({
-      where: {
-        '$customer.user.id$': userId
-      },
-      include: [ 
-        { 
-          association: 'customer',
-          attributes: {exclude: ['photo']},
-          include: [{association: 'user',
-          attributes: {exclude: ['password','recoveryToken']}}]
-        },'location','paymentMethod',//,'items'
-        {
-          association: 'orderProducts',
-          include: ['product','extras']   
-        }
-      ],attributes:{exclude: ['image']}
-    });
-    return orders;
-  }*/
-
 
   async findByUser(userId, query) {
     const options = {
@@ -136,11 +114,15 @@ class OrderService {
     return order;
   }
 
+  async findOneBasic(id) {
+    const order = await models.Order.findByPk(id, {attributes:{exclude: ['image']}});
+    return order;
+  }
+
   async update(id, changes) {
-    return {
-      id,
-      changes,
-    };
+    const user = await this.findOneBasic(id);
+    const rta = await user.update(changes);
+    return rta;
   }
 
   async delete(id) {

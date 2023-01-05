@@ -74,6 +74,12 @@ const OrderSchema = {
     type: DataTypes.BLOB,
     allowNull: true,
   },
+  note: { 
+    allowNull: true,
+    type: DataTypes.STRING,
+    unique: false,
+    defaultValue: ''
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

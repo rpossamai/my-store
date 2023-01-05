@@ -12,6 +12,7 @@ const paymentMethodId = Joi.number().integer();
 const locationId = Joi.number().integer();
 const storeId = Joi.number().integer();
 const image =  Joi.string();
+const note =  Joi.string().max(255);
 
 const amount = Joi.number().integer().min(1);
 const productExtraId = Joi.number().integer();
@@ -53,8 +54,20 @@ const createOrderProductsSchema = Joi.object({
   storeId: storeId.required(),
   status: status.required(),
   type: type.required(),
-  image: type.optional(),
+  image: image.optional(),
+  note: note.optional(),
   products: products.required()
 });
 
-module.exports = { getOrderSchema, createOrderSchema, addItemSchema, addItemExtrasSchema, createOrderProductsSchema };
+const updatOrderSchema = Joi.object({
+  paymentMethodId: paymentMethodId.optional(),
+  locationId: locationId.optional(),
+  storeId: storeId.optional(),
+  status: status.optional(),
+  type: type.optional(),
+  image: image.optional(),
+  note: note.optional()
+});
+
+module.exports = { getOrderSchema, createOrderSchema, addItemSchema, 
+  addItemExtrasSchema, createOrderProductsSchema, updatOrderSchema };
