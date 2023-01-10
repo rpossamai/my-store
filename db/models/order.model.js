@@ -4,6 +4,8 @@ const { LOCATION_TABLE } = require('./location.model');
 const { PAYMENT_METHODS_TABLE } = require('./payment-method.model');
 const { STORE_TABLE } = require('./store.model');
 
+const bcv = require('bcv-divisas');
+
 const ORDER_TABLE = 'orders';
  
 const OrderSchema = {
@@ -108,6 +110,10 @@ const OrderSchema = {
             }, 0);
 
             //console.log('total:'+total);
+            //bcv.bcvDolar().then(data=>{console.log('bcvdolar:'+data["_dolar"])});
+            //bcv.dtDolar().then(data=>{console.log(`TASA: ${JSON.stringify(data)}`)});
+            //bcv.bcvDolar().then(data=>{console.log(`TASA: ${JSON.stringify(data)}`)});
+            
             return total;
           }, 0);
         }

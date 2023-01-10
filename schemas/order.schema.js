@@ -14,13 +14,16 @@ const storeId = Joi.number().integer();
 const image =  Joi.string();
 const note =  Joi.string().max(255);
 
+const price = Joi.number();
 const amount = Joi.number().integer().min(1);
 const productExtraId = Joi.number().integer();
-const extra = Joi.object({productExtraId: productExtraId.required()});
+const extra = Joi.object({productExtraId: productExtraId.required(), price: price.optional()});
 const extras = Joi.array().items(extra);
 const product = Joi.object({
   productId: productId.required(),
   amount: amount.required(),
+  price: price.optional(),
+  note: note.optional(),
   extras: extras.optional()
 });
 const products = Joi.array().items(product);
@@ -59,6 +62,18 @@ const createOrderProductsSchema = Joi.object({
   products: products.required()
 });
 
+const calculateOrderPriceSchema = Joi.object({
+  customerId: customerId.required(),
+  paymentMethodId: paymentMethodId.required(),
+  locationId: locationId.required(),
+  storeId: storeId.required(),
+  status: status.required(),
+  type: type.required(),
+  image: image.optional(),
+  note: note.optional(),
+  products: products.required()
+});
+
 const updatOrderSchema = Joi.object({
   paymentMethodId: paymentMethodId.optional(),
   locationId: locationId.optional(),
@@ -70,4 +85,4 @@ const updatOrderSchema = Joi.object({
 });
 
 module.exports = { getOrderSchema, createOrderSchema, addItemSchema, 
-  addItemExtrasSchema, createOrderProductsSchema, updatOrderSchema };
+  addItemExtrasSchema, createOrderProductsSchema, updatOrderSchema, calculateOrderPriceSchema };

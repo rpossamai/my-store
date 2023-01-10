@@ -57,6 +57,7 @@ class StoreService {
       storeAux ['socialName'] = store.socialName;
       storeAux ['phone'] = store.phone;
       storeAux ['schedule'] = "11am - 11:59pm"//store.schedule;
+      storeAux ['specialTaxpayer'] = store.specialTaxpayer;
       storeAux ['location'] = store.location;
       storeAux ['metrics'] = metrics;
       

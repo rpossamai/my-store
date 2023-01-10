@@ -1,12 +1,16 @@
 const express = require('express');
+//const bcv = require('bcv-divisas');
 
 const OrderService = require('../services/order.service');
 const validatorHandler = require('../middlewares/validator.handler');
-const { getOrderSchema, createOrderSchema, 
+const { getOrderSchema, createOrderSchema, calculateOrderPriceSchema,
   addItemExtrasSchema, createOrderProductsSchema, updatOrderSchema } = require('../schemas/order.schema');
 
 const router = express.Router();
 const service = new OrderService();
+
+const Utils = require('./../utils/utils.js');
+const utils = new Utils();
 
 
 router.get(
@@ -102,6 +106,42 @@ router.patch('/:id',
       const body = req.body;
       const order = await service.update(id, body);
       res.json(order);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/products/calculate-prices',
+  validatorHandler(calculateOrderPriceSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const products = req.body.products;
+      var subtotal = 0;
+      if (products != null) {       
+        if (products.length > 0) {
+          subtotal = products.reduce((total, product) => {
+            total = total + product.price * product.amount;
+            //console.log('price:'+product.price);
+            if (product.extras != null) {
+              product.extras.reduce((totalExtra, extra) => {
+                total = total + extra.price * product.amount;
+              }, 0);
+            }
+            //console.log('total:'+total);
+            return total;
+          }, 0);
+        }
+      }
+      const bcvDolar =  (await utils.bcvDolar())._dolar;
+      //const blackDolar = (await utils.dtDolar())._USD;
+      res.status(201).json({
+        subtotal : subtotal, //service:0,'iva%':12,'IGTF%':3,
+        bcvDolar: bcvDolar,
+        rates: await service.findRates()
+        //blackDolar: blackDolar, bcvEuro: (await utils.bcvDolar())._euro,
+      });
     } catch (error) {
       next(error);
     }

@@ -26,6 +26,12 @@ const StoreSchema =  {
     allowNull: true,
     type: DataTypes.STRING,
   },
+  specialTaxpayer: {
+    allowNull: false,
+    type: DataTypes.BOOLEAN,
+    field: 'special_taxpayer',
+    defaultValue: false,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,

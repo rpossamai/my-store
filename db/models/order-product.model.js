@@ -43,6 +43,12 @@ const OrderProductSchema =  {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  note: { 
+    allowNull: true,
+    type: DataTypes.STRING,
+    unique: false,
+    defaultValue: ''
   }
 }
 

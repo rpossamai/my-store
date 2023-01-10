@@ -56,13 +56,14 @@ class OrderService {
     };
 
     const { status } = query;
-    if (status) { options.where.status = status; }
+    if (status) { options.where.status = status }
 
     const orders = await models.Order.findAll(options);
     return orders;
   }
 
   async findByUser(userId, query) {
+    
     const options = {
       where: {
         '$customer.user.id$': userId
@@ -83,7 +84,10 @@ class OrderService {
 
     const { status, createdAt } = query;
 
-    if (status) { options.where.status = status; }
+    if (status) { 
+      //options.where.status = status;
+      options.where.status = { [Op.in]: status.split(',') };
+    }
 
     if (createdAt) {
       var initDate = moment(createdAt);//.subtract(4, 'hours');
@@ -127,6 +131,12 @@ class OrderService {
 
   async delete(id) {
     return { id };
+  }
+
+  /*busca todos los impuestos y comisiones que se podrian aplicar a una orden de compra*/ 
+  async findRates() {
+    const rates = await models.Rate.findAll();
+    return rates;
   }
 
 }

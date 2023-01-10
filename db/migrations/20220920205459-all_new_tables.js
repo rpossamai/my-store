@@ -14,6 +14,7 @@ const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('./../models/order-p
 const { OrderProductProductExtraSchema, ORDER_PRODUCT_PRODUCT_EXTRA_TABLE } = require('./../models/order-product-product-extra.model');
 
 const { RoleSchema, ROLE_TABLE } = require('./../models/role.model');
+const { RateSchema, RATE_TABLE } = require('./../models/rate.model');
 const { LocationSchema, LOCATION_TABLE } = require('./../models/location.model');
 const { OwnerSchema, OWNER_TABLE } = require('./../models/owner.model');
 const { StoreSchema, STORE_TABLE } = require('./../models/store.model');
@@ -41,10 +42,7 @@ module.exports = {
     await queryInterface.createTable(PAYMENT_METHODS_TABLE,PaymentMethodSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
-    await queryInterface.createTable(
-      ORDER_PRODUCT_PRODUCT_EXTRA_TABLE,
-      OrderProductProductExtraSchema
-    );
+    await queryInterface.createTable(ORDER_PRODUCT_PRODUCT_EXTRA_TABLE, OrderProductProductExtraSchema);
     await queryInterface.createTable(STORE_PRODUCT_TABLE, StoreProductSchema);
     await queryInterface.createTable(
       STORE_PRODUCT_EXTRA_TABLE,
@@ -56,6 +54,7 @@ module.exports = {
     );
     await queryInterface.createTable(DELIVERY_PRICE_TABLE, DeliveryPriceSchema);
     await queryInterface.createTable(ROLE_TABLE, RoleSchema);
+    await queryInterface.createTable(RATE_TABLE, RateSchema);
 
     const hash = await bcrypt.hash('987654321', 10);
     await queryInterface.bulkInsert(USER_TABLE, [
@@ -145,6 +144,7 @@ module.exports = {
         owner_id: 1,
         phone: 123456789,
         location_id: 1,
+        special_taxpayer: true,
         created_at: new Date(),
       },
       {
@@ -153,6 +153,7 @@ module.exports = {
         owner_id: 1,
         phone: 123456789,
         location_id: 2,
+        special_taxpayer: false,
         created_at: new Date(),
       },
       {
@@ -161,6 +162,7 @@ module.exports = {
         owner_id: 1,
         phone: 123456789,
         location_id: 4,
+        special_taxpayer: true,
         created_at: new Date(),
       },
       {
@@ -169,6 +171,7 @@ module.exports = {
         owner_id: 1,
         phone: 123456789,
         location_id: 3,
+        special_taxpayer: false,
         created_at: new Date(),
       },
     ]);
@@ -895,9 +898,16 @@ module.exports = {
         created_at: new Date(),
       },
     ]);
+
+    await queryInterface.bulkInsert(RATE_TABLE, [
+      { name: 'IVA', percentage: 12, created_at: new Date() },
+      { name: 'IGTF', percentage: 3,created_at: new Date() },
+      { name: 'SERVICES', percentage: 1, created_at: new Date() },
+    ]);
   },
 
   async down(queryInterface) {
+    await queryInterface.dropTable(RATE_TABLE);
     await queryInterface.dropTable(ROLE_TABLE);
     await queryInterface.dropTable(DELIVERY_PRICE_TABLE);
 
